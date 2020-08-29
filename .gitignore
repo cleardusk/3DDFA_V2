@@ -6,3 +6,5 @@ __pycache__
 
 .idea/
 tmp/
+
+.ipynb_checkpoints/
