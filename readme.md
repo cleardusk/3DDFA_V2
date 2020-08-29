@@ -8,7 +8,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 ## Introduction
 This is an extended work of the github improved version of [3DDFA](https://github.com/cleardusk/3DDFA), named [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf).
 
-**The code and models will be released in next days.** 😃
+**The PyTorch code and models will be released in next days.** 😃
 
 ## Get Started
 1. Clone this repo
