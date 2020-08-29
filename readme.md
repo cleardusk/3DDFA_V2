@@ -1,6 +1,6 @@
 # Towards Fast, Accurate and Stable 3D Dense Face Alignment
 
-<!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) -->
+[![License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 ![GitHub repo size](https://img.shields.io/github/repo-size/cleardusk/3DDFA_V2.svg)
 
 By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/), [Yang Yang](http://www.cbsr.ia.ac.cn/users/yyang/main.htm), Fan Yang, [Zhen Lei](http://www.cbsr.ia.ac.cn/users/zlei/) and [Stan Z. Li](https://scholar.google.com/citations?user=Y-nyLGIAAAAJ).
