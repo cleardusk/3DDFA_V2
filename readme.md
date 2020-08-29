@@ -24,12 +24,23 @@ sh ./build_cpu_nms.sh
 ```
 
 3. Run demos
+
 ```shell script
 # running on still image
 python3 demo.py -f examples/inputs/emma.jpg
+
+# running on videos
+python3 demo_video.py -f examples/inputs/videos/214.avi
+
+# running on videos smoothly by looking ahead by `n_next` frames
+python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
 ```
 
+The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. I use a threshold to trickly check the tracking state, but it is unstable.
+
 ## Citation
+
+If your work of research benefit from this repo, please cite two bibs below : )
 
     @inproceedings{guo2020towards,
         title =        {Towards Fast, Accurate and Stable 3D Dense Face Alignment},
@@ -44,3 +55,6 @@ python3 demo.py -f examples/inputs/emma.jpg
         howpublished = {\url{https://github.com/cleardusk/3DDFA}},
         year =         {2018}
     }
+
+## Contact
+**Jianzhu Guo (郭建珠)** [[Homepage](http://guojianzhu.com), [Google Scholar](https://scholar.google.com/citations?user=W8_JzNcAAAAJ&hl=en&oi=ao)]:  **jianzhu.guo@nlpr.ia.ac.cn** or **guojianzhu1994@foxmail.com**.
