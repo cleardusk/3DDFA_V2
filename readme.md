@@ -38,6 +38,8 @@ python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
 
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. I use a threshold to trickly check the tracking state, but it is unstable.
 
+You can refer to `demo.ipynb` for the step-by-step tutorial. 
+
 ## Citation
 
 If your work or research benefits from this repo, please cite two bibs below : )
