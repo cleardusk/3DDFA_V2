@@ -1,0 +1,10 @@
+torch
+torchvision
+matplotlib
+numpy
+opencv-python # cv2
+imageio
+imageio-ffmpeg
+pyyaml # yaml
+tqdm
+argparse
