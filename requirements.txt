@@ -8,3 +8,4 @@ imageio-ffmpeg
 pyyaml # yaml
 tqdm
 argparse
+pickle

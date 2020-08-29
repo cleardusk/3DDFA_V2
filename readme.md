@@ -40,7 +40,7 @@ The implementation of tracking is simply by alignment. If the head pose > 90° o
 
 ## Citation
 
-If your work of research benefit from this repo, please cite two bibs below : )
+If your work or research benefits from this repo, please cite two bibs below : )
 
     @inproceedings{guo2020towards,
         title =        {Towards Fast, Accurate and Stable 3D Dense Face Alignment},
