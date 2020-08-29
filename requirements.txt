@@ -9,3 +9,4 @@ pyyaml # yaml
 tqdm
 argparse
 pickle
+cython
