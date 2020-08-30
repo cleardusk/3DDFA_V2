@@ -1,6 +1,6 @@
 # Towards Fast, Accurate and Stable 3D Dense Face Alignment
 
-[![License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 ![GitHub repo size](https://img.shields.io/github/repo-size/cleardusk/3DDFA_V2.svg)
 
 By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/), [Yang Yang](http://www.cbsr.ia.ac.cn/users/yyang/main.htm), Fan Yang, [Zhen Lei](http://www.cbsr.ia.ac.cn/users/zlei/) and [Stan Z. Li](https://scholar.google.com/citations?user=Y-nyLGIAAAAJ).
@@ -39,6 +39,10 @@ python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. I use a threshold to trickly check the tracking state, but it is unstable.
 
 You can refer to `demo.ipynb` for the step-by-step tutorial. 
+
+## Acknowledgement
+
+* The FaceBoxes module is modified from [FaceBoxes.PyTorch](https://github.com/zisianw/FaceBoxes.PyTorch)
 
 ## Citation
 

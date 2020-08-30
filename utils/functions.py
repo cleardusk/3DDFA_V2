@@ -98,20 +98,20 @@ def parse_roi_box_from_bbox(bbox):
     return roi_box
 
 
-def draw_landmarks(img, pts, style='fancy', wfp=None, show_flg=False, **kwargs):
+def draw_landmarks(img, pts, style='fancy', wfp=None, show_flag=False, **kwargs):
     """Draw landmarks using matplotlib"""
     height, width = img.shape[:2]
     plt.figure(figsize=(12, height / width * 12))
-    plt.imshow(img[:, :, ::-1])
+    plt.imshow(img[..., ::-1])
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     plt.axis('off')
 
-    dense_flg = kwargs.get('dense_flg')
+    dense_flag = kwargs.get('dense_flag')
 
     if not type(pts) in [tuple, list]:
         pts = [pts]
     for i in range(len(pts)):
-        if dense_flg:
+        if dense_flag:
             plt.plot(pts[i][0, ::6], pts[i][1, ::6], 'o', markersize=0.4, color='c', alpha=0.7)
         else:
             alpha = 0.8
@@ -141,7 +141,8 @@ def draw_landmarks(img, pts, style='fancy', wfp=None, show_flg=False, **kwargs):
     if wfp is not None:
         plt.savefig(wfp, dpi=150)
         print('Save visualization result to {}'.format(wfp))
-    if show_flg:
+
+    if show_flag:
         plt.show()
 
 

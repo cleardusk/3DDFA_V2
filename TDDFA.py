@@ -12,9 +12,14 @@ import torch.backends.cudnn as cudnn
 
 import models
 from utils.io import _load
-from utils.functions import get_suffix, parse_roi_box_from_landmark, crop_img, \
-    draw_landmarks, parse_roi_box_from_bbox
-from utils.tddfa_util import load_model, ToTensorGjz, NormalizeGjz, recon_dense, recon_sparse
+from utils.functions import (
+    crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,
+)
+from utils.tddfa_util import (
+    load_model,
+    ToTensorGjz, NormalizeGjz,
+    recon_dense, recon_sparse
+)
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 

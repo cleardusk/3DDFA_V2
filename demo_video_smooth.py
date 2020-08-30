@@ -31,7 +31,7 @@ def main(args):
     writer = imageio.get_writer(video_wfp, fps=fps)
 
     # the simple implementation of average smoothing by looking ahead by n_next frames
-    # assrer the frames of the video >= n
+    # assert the frames of the video >= n
     n_pre, n_next = args.n_pre, args.n_next
     n = n_pre + n_next + 1
     queue_ver = deque()
