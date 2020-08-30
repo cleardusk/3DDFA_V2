@@ -13,7 +13,7 @@ from utils.functions import cv_draw_landmark
 
 
 def main(args):
-    cfg = yaml.load(open(args.config), Loader=yaml.FullLoader)
+    cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
     gpu_mode = args.mode == 'gpu'
     tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
 

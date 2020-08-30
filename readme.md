@@ -21,6 +21,7 @@ cd 3DDFA_V2
 ```shell script
 cd FaceBoxes
 sh ./build_cpu_nms.sh
+cd ..
 ```
 
 3. Run demos

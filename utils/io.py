@@ -9,9 +9,7 @@ import pickle
 
 
 def mkdir(d):
-    """only works on *nix system"""
-    if not os.path.isdir(d) and not os.path.exists(d):
-        os.system('mkdir -p {}'.format(d))
+    os.makedirs(d, exist_ok=True)
 
 
 def _get_suffix(filename):
@@ -56,6 +54,7 @@ def _tensor_to_cuda(x):
 
 def _load_gpu(fp):
     return torch.from_numpy(_load(fp)).cuda()
+
 
 _load_cpu = _load
 _numpy_to_tensor = lambda x: torch.from_numpy(x)
