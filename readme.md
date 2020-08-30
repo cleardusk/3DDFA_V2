@@ -7,7 +7,7 @@
 By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/), [Yang Yang](http://www.cbsr.ia.ac.cn/users/yyang/main.htm), Fan Yang, [Zhen Lei](http://www.cbsr.ia.ac.cn/users/zlei/) and [Stan Z. Li](https://scholar.google.com/citations?user=Y-nyLGIAAAAJ).
 
 <p align="center">
-  <img src="docs/images/out.gif" alt="demo">
+  <img src="docs/images/out.gif" alt="demo" width="640px">
 </p>
 
 ## Introduction
