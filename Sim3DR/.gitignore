@@ -1,0 +1,8 @@
+.DS_Store
+cmake-build-debug/
+.idea/
+build/
+*.so
+data/
+
+lib/rasterize.cpp

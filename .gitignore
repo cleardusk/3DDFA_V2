@@ -8,3 +8,4 @@ __pycache__
 tmp/
 
 .ipynb_checkpoints/
+test_sim3dr.py

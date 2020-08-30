@@ -18,10 +18,14 @@ git clone https://github.com/cleardusk/3DDFA_V2.git
 cd 3DDFA_V2
 ```
 
-2. Build Cython version of NMS 
+2. Build the cython version of NMS, and Sim3DR
 ```shell script
 cd FaceBoxes
 sh ./build_cpu_nms.sh
+cd ..
+
+cd Sim3DR
+sh ./build_sim3dr.sh
 cd ..
 ```
 

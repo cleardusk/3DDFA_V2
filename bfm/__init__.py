@@ -1,1 +1,1 @@
-from .bfm import bfm
+from .bfm import bfm, tri

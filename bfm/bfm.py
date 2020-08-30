@@ -29,4 +29,6 @@ class BFMModel(object):
         self.w_exp_base = self.w_exp[self.keypoints]
 
 
-bfm = BFMModel(osp.join(make_abs_path('../configs'), 'bfm_noneck_v3.pkl'))
+cfg_path = make_abs_path('../configs')
+bfm = BFMModel(osp.join(cfg_path, 'bfm_noneck.pkl'))
+tri = _load(osp.join(cfg_path, 'tri.pkl'))

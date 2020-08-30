@@ -9,11 +9,19 @@ sys.path.append('..')
 import argparse
 import numpy as np
 import torch
-from bfm import bfm
+from bfm import bfm, tri
+
+
+def _to_ctype(arr):
+    if not arr.flags.c_contiguous:
+        return arr.copy(order='C')
+    return arr
+
 
 # use global for accelerating
 u_base, w_shp_base, w_exp_base = bfm.u_base, bfm.w_shp_base, bfm.w_exp_base
 u, w_shp, w_exp = bfm.u, bfm.w_shp, bfm.w_exp
+tri = _to_ctype(tri.T).astype(np.int32)
 
 
 def str2bool(v):
