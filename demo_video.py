@@ -9,6 +9,7 @@ import yaml
 
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
+from utils.render import render
 from utils.functions import cv_draw_landmark
 
 
@@ -25,23 +26,25 @@ def main(args):
     reader = imageio.get_reader(args.video_fp)
 
     fps = reader.get_meta_data()['fps']
-    video_wfp = f'examples/results/videos/{fn.replace(".avi", ".mp4")}'
+    video_wfp = f'examples/results/videos/{fn.replace(".avi", "")}_{args.opt}.mp4'
     writer = imageio.get_writer(video_wfp, fps=fps)
 
+    # run
+    dense_flag = args.opt in ('3d',)
     pre_ver = None
     for i, frame in tqdm(enumerate(reader)):
-        frame_bgr = frame[:, :, ::-1]  # RGB->BGR
+        frame_bgr = frame[..., ::-1]  # RGB->BGR
 
         if i == 0:
             # the first frame, detect face, here we only use the first face, you can change depending on your need
             boxes = face_boxes(frame_bgr)
             boxes = [boxes[0]]
             param_lst, roi_box_lst = tddfa(frame_bgr, boxes)
-            ver = tddfa.recon_vers(param_lst, roi_box_lst)[0]
+            ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
             # refine
             param_lst, roi_box_lst = tddfa(frame_bgr, [ver], crop_policy='landmark')
-            ver = tddfa.recon_vers(param_lst, roi_box_lst)[0]
+            ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
         else:
             param_lst, roi_box_lst = tddfa(frame_bgr, [pre_ver], crop_policy='landmark')
 
@@ -52,12 +55,18 @@ def main(args):
                 boxes = [boxes[0]]
                 param_lst, roi_box_lst = tddfa(frame_bgr, boxes)
 
-            ver = tddfa.recon_vers(param_lst, roi_box_lst)[0]
+            ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
         pre_ver = ver  # for tracking
 
-        img_draw = cv_draw_landmark(frame_bgr, ver)
-        writer.append_data(img_draw[:, :, ::-1])  # BGR->RGB
+        if args.opt == '2d':
+            res = cv_draw_landmark(frame_bgr, ver)
+        elif args.opt == '3d':
+            res = render(frame_bgr, [ver])
+        else:
+            raise Exception(f'Unknown opt {args.opt}')
+
+        writer.append_data(res[..., ::-1])  # BGR->RGB
 
     writer.close()
     print(f'Dump to {video_wfp}')
@@ -68,6 +77,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--config', type=str, default='configs/mb1_120x120.yml')
     parser.add_argument('-f', '--video_fp', type=str)
     parser.add_argument('-m', '--mode', default='cpu', type=str, help='gpu or cpu mode')
+    parser.add_argument('-o', '--opt', type=str, default='2d', choices=['2d', '3d'])
 
     args = parser.parse_args()
     main(args)

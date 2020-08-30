@@ -6,13 +6,23 @@
 
 By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/), [Yang Yang](http://www.cbsr.ia.ac.cn/users/yyang/main.htm), Fan Yang, [Zhen Lei](http://www.cbsr.ia.ac.cn/users/zlei/) and [Stan Z. Li](https://scholar.google.com/citations?user=Y-nyLGIAAAAJ).
 
+<p align="center">
+  <img src="docs/images/out.gif" alt="demo">
+</p>
+
 ## Introduction
-This is an extended work of the github improved version of [3DDFA](https://github.com/cleardusk/3DDFA), named [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf).
+This is an extended work of the github improved version of [3DDFA](https://github.com/cleardusk/3DDFA), named [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/out.gif) above shows a demo of the tracking result.
 
-**The PyTorch code and models will be released in next days.** 😃
 
-## Get Started
+## Getting started
+
+### Requirements
+See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. Note that this repo uses Python3. The major dependencies are PyTorch, numpy and opencv-python.
+
+### Usage
+
 1. Clone this repo
+   
 ```shell script
 git clone https://github.com/cleardusk/3DDFA_V2.git
 cd 3DDFA_V2
@@ -27,6 +37,11 @@ cd ..
 cd Sim3DR
 sh ./build_sim3dr.sh
 cd ..
+```
+
+or simply build them by
+```shell script
+sh ./build.sh
 ```
 
 3. Run demos
@@ -44,7 +59,13 @@ python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
 
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. I use a threshold to trickly check the tracking state, but it is unstable.
 
-You can refer to `demo.ipynb` for the step-by-step tutorial. 
+You can refer to [demo.ipynb](./demo.ipynb) for the step-by-step tutorial of running on the still image.
+
+For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will give the result below:
+
+<p align="center">
+  <img src="docs/images/emma_3d.jpg" alt="demo" width="750px">
+</p>
 
 ## Acknowledgement
 

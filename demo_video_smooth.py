@@ -39,7 +39,7 @@ def main(args):
 
     pre_ver = None
     for i, frame in tqdm(enumerate(reader)):
-        frame_bgr = frame[:, :, ::-1]  # RGB->BGR
+        frame_bgr = frame[..., ::-1]  # RGB->BGR
 
         if i == 0:
             # detect
@@ -97,7 +97,7 @@ def main(args):
 
         img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
 
-        writer.append_data(img_draw[:, :, ::-1])  # BGR->RGB
+        writer.append_data(img_draw[..., ::-1])  # BGR->RGB
 
         queue_ver.popleft()
         queue_frame.popleft()

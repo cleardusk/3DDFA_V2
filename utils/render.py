@@ -23,14 +23,14 @@ cfg = {
     'view_pos': (0, 0, 5)
 }
 
+render_app = RenderPipeline(**cfg)
+
 
 def render(img, ver_lst, alpha=0.6, show_flag=False, wfp=None):
-    render = RenderPipeline(**cfg)
-
     overlap = img.copy()
     for ver_ in ver_lst:
         ver = _to_ctype(ver_.T)  # transpose
-        overlap = render(ver, tri, overlap)
+        overlap = render_app(ver, tri, overlap)
 
     res = cv2.addWeighted(img, 1 - alpha, overlap, alpha, 0)
 
