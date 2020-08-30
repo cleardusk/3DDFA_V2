@@ -64,7 +64,7 @@ You can refer to [demo.ipynb](./demo.ipynb) for the step-by-step tutorial of run
 For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will give the result below:
 
 <p align="center">
-  <img src="docs/images/emma_3d.jpg" alt="demo" width="750px">
+  <img src="docs/images/emma_3d.jpg" alt="demo" width="640px">
 </p>
 
 ## Acknowledgement
