@@ -11,3 +11,5 @@ tmp/
 test_sim3dr.py
 
 *gif.py
+refine_index.py
+

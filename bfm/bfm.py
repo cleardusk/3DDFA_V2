@@ -30,5 +30,5 @@ class BFMModel(object):
 
 
 cfg_path = make_abs_path('../configs')
-bfm = BFMModel(osp.join(cfg_path, 'bfm_noneck.pkl'))
+bfm = BFMModel(osp.join(cfg_path, 'bfm_noneck_v3.pkl'))
 tri = _load(osp.join(cfg_path, 'tri.pkl'))
