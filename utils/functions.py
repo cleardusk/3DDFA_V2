@@ -148,13 +148,12 @@ def draw_landmarks(img, pts, style='fancy', wfp=None, show_flag=False, **kwargs)
                 plt.plot(pts[i][0, l:r], pts[i][1, l:r], marker='o', linestyle='None', markersize=markersize,
                          color=color,
                          markeredgecolor=markeredgecolor, alpha=alpha)
-
-    if show_flag:
-        plt.show()
-
     if wfp is not None:
         plt.savefig(wfp, dpi=150)
         print(f'Save visualization result to {wfp}')
+
+    if show_flag:
+        plt.show()
 
 
 def cv_draw_landmark(img_ori, pts, box=None, color=GREEN, size=2):

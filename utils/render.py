@@ -34,11 +34,11 @@ def render(img, ver_lst, alpha=0.6, show_flag=False, wfp=None):
 
     res = cv2.addWeighted(img, 1 - alpha, overlap, alpha, 0)
 
-    if show_flag:
-        plot_image(res)
-
     if wfp is not None:
         cv2.imwrite(wfp, res)
         print(f'Save visualization result to {wfp}')
+
+    if show_flag:
+        plot_image(res)
 
     return res

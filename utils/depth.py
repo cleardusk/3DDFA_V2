@@ -35,11 +35,11 @@ def depth(img, ver_lst, show_flag=False, wfp=None, with_bg_flag=True):
 
         overlap = rasterize(ver, tri, z, bg=overlap)
 
-    if show_flag:
-        plot_image(overlap)
-
     if wfp is not None:
         cv2.imwrite(wfp, overlap)
         print(f'Save visualization result to {wfp}')
+
+    if show_flag:
+        plot_image(overlap)
 
     return overlap
