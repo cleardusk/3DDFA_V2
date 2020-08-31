@@ -160,7 +160,9 @@ void _get_normal(float *ver_normal, float *vertices, int *triangles, int nver, i
     float v1x, v1y, v1z, v2x, v2y, v2z;
 
     // get tri_normal
-    float tri_normal[3 * ntri];
+//    float tri_normal[3 * ntri];
+    float* tri_normal;
+    tri_normal = new float [3 * ntri];
     for (int i = 0; i < ntri; i++) {
         tri_p0_ind = triangles[3 * i];
         tri_p1_ind = triangles[3 * i + 1];
@@ -208,6 +210,8 @@ void _get_normal(float *ver_normal, float *vertices, int *triangles, int nver, i
         ver_normal[3 * i + 1] = ny / det;
         ver_normal[3 * i + 2] = nz / det;
     }
+
+    delete[] tri_normal;
 }
 
 // rasterization by Z-Buffer with optimization

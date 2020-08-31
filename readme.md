@@ -11,13 +11,18 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 </p>
 
 ## Introduction
-This is an extended work of the github improved version of [3DDFA](https://github.com/cleardusk/3DDFA), named [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/out.gif) above shows a demo of the tracking result.
 
+This work extends [3DDFA](https://github.com/cleardusk/3DDFA), named **3DDFA_V2**, titled [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/out.gif) above shows a demo of the tracking result.
+This repo is the official implementation of 3DDFA_V2.
+
+Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves better performance and stability. Besides, 3DDFA_V2 incorporates the fast face detector [FaceBoxes](https://github.com/zisianw/FaceBoxes.PyTorch) instead of Dlib. A simple 3D render written by c++ and cython is also included. If you are interested in this repo, just try it! Welcome for valuable issues and PRs 😄
+
+<!-- Currently, the pre-trained model, inference code and some utilities are released.  -->
 
 ## Getting started
 
 ### Requirements
-See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. Note that this repo uses Python3. The major dependencies are PyTorch, numpy and opencv-python.
+See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. Note that this repo uses Python3. The major dependencies are PyTorch, numpy and opencv-python, etc.
 
 ### Usage
 
@@ -29,7 +34,7 @@ cd 3DDFA_V2
 ```
 
 2. Build the cython version of NMS, and Sim3DR
-```shell script
+<!-- ```shell script
 cd FaceBoxes
 sh ./build_cpu_nms.sh
 cd ..
@@ -39,7 +44,7 @@ sh ./build_sim3dr.sh
 cd ..
 ```
 
-or simply build them by
+or simply build them by -->
 ```shell script
 sh ./build.sh
 ```
@@ -57,7 +62,7 @@ python3 demo_video.py -f examples/inputs/videos/214.avi
 python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
 ```
 
-The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. I use a threshold to trickly check the tracking state, but it is unstable.
+The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. A threshold is used to trickly check the tracking state, but it is unstable.
 
 You can refer to [demo.ipynb](./demo.ipynb) for the step-by-step tutorial of running on the still image.
 
