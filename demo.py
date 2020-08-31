@@ -40,7 +40,8 @@ def main(args):
     dense_flag = args.opt in ('2d_dense', '3d')  # if opt is 2d_dense or 3d, reconstruct dense vertices
     ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)
 
-    wfp = f'examples/results/{args.img_fp.split("/")[-1].replace(get_suffix(args.img_fp), "")}_{args.opt}.jpg'
+    suffix = get_suffix(args.img_fp)
+    wfp = f'examples/results/{args.img_fp.split("/")[-1].replace(suffix, "")}_{args.opt}.jpg'
 
     if args.opt == '2d_sparse':
         draw_landmarks(img, ver_lst, show_flag=args.show_flag, dense_flag=dense_flag, wfp=wfp)

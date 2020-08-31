@@ -1,0 +1,5 @@
+arch: mobilenet # MobileNet V1
+widen_factor: 0.5
+checkpoint_fp: weights/mb05_120x120.pth
+size: 120
+num_params: 62

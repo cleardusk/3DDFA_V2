@@ -10,7 +10,7 @@ import yaml
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
 from utils.render import render
-from utils.functions import cv_draw_landmark
+from utils.functions import cv_draw_landmark, get_suffix
 
 
 def main(args):
@@ -26,7 +26,9 @@ def main(args):
     reader = imageio.get_reader(args.video_fp)
 
     fps = reader.get_meta_data()['fps']
-    video_wfp = f'examples/results/videos/{fn.replace(".avi", "")}_{args.opt}.mp4'
+
+    suffix = get_suffix(args.video_fp)
+    video_wfp = f'examples/results/videos/{fn.replace(suffix, "")}_{args.opt}.mp4'
     writer = imageio.get_writer(video_wfp, fps=fps)
 
     # run

@@ -11,7 +11,7 @@ from collections import deque
 
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
-from utils.functions import cv_draw_landmark
+from utils.functions import cv_draw_landmark, get_suffix
 
 
 def main(args):
@@ -27,7 +27,8 @@ def main(args):
     reader = imageio.get_reader(args.video_fp)
 
     fps = reader.get_meta_data()['fps']
-    video_wfp = f'examples/results/videos/{fn.replace(".avi", "_smooth.mp4")}'
+    suffix = get_suffix(args.video_fp)
+    video_wfp = f'examples/results/videos/{fn.replace(suffix, "")}_smooth.mp4'
     writer = imageio.get_writer(video_wfp, fps=fps)
 
     # the simple implementation of average smoothing by looking ahead by n_next frames
