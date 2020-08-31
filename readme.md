@@ -52,7 +52,7 @@ sh ./build.sh
 3. Run demos
 
 ```shell script
-# running on still image
+# running on still image, four options: 2d_sparse, 2d_dense, 3d, depth
 python3 demo.py -f examples/inputs/emma.jpg
 
 # running on videos

@@ -7,9 +7,9 @@ import sys
 sys.path.append('..')
 
 import cv2
-import matplotlib.pyplot as plt
 
 from Sim3DR import RenderPipeline
+from utils.functions import plot_image
 from .tddfa_util import _to_ctype, tri
 
 cfg = {
@@ -35,14 +35,7 @@ def render(img, ver_lst, alpha=0.6, show_flag=False, wfp=None):
     res = cv2.addWeighted(img, 1 - alpha, overlap, alpha, 0)
 
     if show_flag:
-        height, width = img.shape[:2]
-        plt.figure(figsize=(12, height / width * 12))
-
-        plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
-        plt.axis('off')
-
-        plt.imshow(res[..., ::-1])
-        plt.show()
+        plot_image(res)
 
     if wfp is not None:
         cv2.imwrite(wfp, res)

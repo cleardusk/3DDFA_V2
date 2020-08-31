@@ -98,6 +98,17 @@ def parse_roi_box_from_bbox(bbox):
     return roi_box
 
 
+def plot_image(img):
+    height, width = img.shape[:2]
+    plt.figure(figsize=(12, height / width * 12))
+
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+    plt.axis('off')
+
+    plt.imshow(img[..., ::-1])
+    plt.show()
+
+
 def draw_landmarks(img, pts, style='fancy', wfp=None, show_flag=False, **kwargs):
     """Draw landmarks using matplotlib"""
     height, width = img.shape[:2]

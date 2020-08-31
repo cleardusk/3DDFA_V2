@@ -8,8 +8,8 @@ __pycache__
 tmp/
 
 .ipynb_checkpoints/
-test_sim3dr.py
 
 *gif.py
 refine_index.py
+test*.py
 clean_git.sh
