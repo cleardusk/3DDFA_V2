@@ -64,7 +64,7 @@ python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
 
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. A threshold is used to trickly check the tracking state, but it is unstable.
 
-You can refer to [demo.ipynb](./demo.ipynb) for the step-by-step tutorial of running on the still image.
+You can refer to [demo.ipynb](./demo.ipynb) or [google colab](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv) for the step-by-step tutorial of running on the still image.
 
 For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will give the result below:
 
