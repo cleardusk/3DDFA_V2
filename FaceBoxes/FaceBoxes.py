@@ -22,7 +22,7 @@ nms_threshold = 0.3
 vis_thres = 0.5
 resize = 1
 
-scale_flag = False
+scale_flag = True
 HEIGHT, WIDTH = 720, 1080
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
