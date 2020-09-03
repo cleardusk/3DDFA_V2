@@ -78,6 +78,7 @@ For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will gi
 ## FQA
 
 1. What is the training data?
+
 We use [300W-LP](https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing) for training. You can refer to our [paper](https://guojianzhu.com/assets/pdfs/3162.pdf) for more details about the training. Since few images are closed-eyes in the training data 300W-LP, the landmarks of eyes are not accurate when closing.
 
 ## Acknowledgement
