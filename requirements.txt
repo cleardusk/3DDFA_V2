@@ -8,6 +8,5 @@ imageio-ffmpeg
 pyyaml # yaml
 tqdm
 argparse
-pickle
 cython
 scikit-image # skimage
