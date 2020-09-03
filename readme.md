@@ -52,14 +52,17 @@ sh ./build.sh
 3. Run demos
 
 ```shell script
-# running on still image, four options: 2d_sparse, 2d_dense, 3d, depth
+# 1. running on still image, four options: 2d_sparse, 2d_dense, 3d, depth
 python3 demo.py -f examples/inputs/emma.jpg
 
-# running on videos
+# 2. running on videos
 python3 demo_video.py -f examples/inputs/videos/214.avi
 
-# running on videos smoothly by looking ahead by `n_next` frames
+# 3. running on videos smoothly by looking ahead by `n_next` frames
 python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
+
+# 4. running on webcam
+python3 demo_webcam_smooth.py
 ```
 
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. A threshold is used to trickly check the tracking state, but it is unstable.
@@ -71,6 +74,11 @@ For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will gi
 <p align="center">
   <img src="docs/images/emma_3d.jpg" alt="demo" width="640px">
 </p>
+
+## FQA
+
+1. What is the training data?
+We use [300W-LP](https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing) for training. You can refer to our [paper](https://guojianzhu.com/assets/pdfs/3162.pdf) for more details about the training. Since few images are closed-eyes in the training data 300W-LP, the landmarks of eyes are not accurate when closing.
 
 ## Acknowledgement
 
