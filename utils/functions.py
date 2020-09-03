@@ -159,8 +159,13 @@ def draw_landmarks(img, pts, style='fancy', wfp=None, show_flag=False, **kwargs)
 def cv_draw_landmark(img_ori, pts, box=None, color=GREEN, size=2):
     img = img_ori.copy()
     n = pts.shape[1]
-    for i in range(n):
-        cv2.circle(img, (int(round(pts[0, i])), int(round(pts[1, i]))), size, color, -1)
+    if n <= 106:
+        for i in range(n):
+            cv2.circle(img, (int(round(pts[0, i])), int(round(pts[1, i]))), size, color, -1)
+    else:
+        sep = 16
+        for i in range(0, n, sep):
+            cv2.circle(img, (int(round(pts[0, i])), int(round(pts[1, i]))), size, color, 1)
 
     if box is not None:
         left, top, right, bottom = np.round(box).astype(np.int32)

@@ -11,6 +11,7 @@ from collections import deque
 
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
+from utils.render import render
 from utils.functions import cv_draw_landmark, get_suffix
 
 
@@ -28,7 +29,7 @@ def main(args):
 
     fps = reader.get_meta_data()['fps']
     suffix = get_suffix(args.video_fp)
-    video_wfp = f'examples/results/videos/{fn.replace(suffix, "")}_smooth.mp4'
+    video_wfp = f'examples/results/videos/{fn.replace(suffix, "")}_{args.opt}_smooth.mp4'
     writer = imageio.get_writer(video_wfp, fps=fps)
 
     # the simple implementation of average smoothing by looking ahead by n_next frames
@@ -38,8 +39,15 @@ def main(args):
     queue_ver = deque()
     queue_frame = deque()
 
+    # run
+    dense_flag = args.opt in ('2d_dense', '3d',)
     pre_ver = None
     for i, frame in tqdm(enumerate(reader)):
+        if args.start > 0 and i < args.start:
+            continue
+        if args.end > 0 and i > args.end:
+            break
+
         frame_bgr = frame[..., ::-1]  # RGB->BGR
 
         if i == 0:
@@ -47,11 +55,11 @@ def main(args):
             boxes = face_boxes(frame_bgr)
             boxes = [boxes[0]]
             param_lst, roi_box_lst = tddfa(frame_bgr, boxes)
-            ver = tddfa.recon_vers(param_lst, roi_box_lst)[0]
+            ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
             # refine
             param_lst, roi_box_lst = tddfa(frame_bgr, [ver], crop_policy='landmark')
-            ver = tddfa.recon_vers(param_lst, roi_box_lst)[0]
+            ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
             # padding queue
             for j in range(n_pre):
@@ -72,7 +80,7 @@ def main(args):
                 boxes = [boxes[0]]
                 param_lst, roi_box_lst = tddfa(frame_bgr, boxes)
 
-            ver = tddfa.recon_vers(param_lst, roi_box_lst)[0]
+            ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
             queue_ver.append(ver.copy())
             queue_frame.append(frame_bgr.copy())
@@ -82,7 +90,13 @@ def main(args):
         # smoothing: enqueue and dequeue ops
         if len(queue_ver) >= n:
             ver_ave = np.mean(queue_ver, axis=0)
-            img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
+
+            if args.opt == '2d_sparse':
+                img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
+            elif args.opt == '2d_dense':
+                img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
+            elif args.opt == '3d':
+                img_draw = render(queue_frame[n_pre], [ver_ave], alpha=0.7)
 
             writer.append_data(img_draw[:, :, ::-1])  # BGR->RGB
 
@@ -96,7 +110,12 @@ def main(args):
 
         ver_ave = np.mean(queue_ver, axis=0)
 
-        img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
+        if args.opt == '2d_sparse':
+            img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
+        elif args.opt == '2d_dense':
+            img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
+        elif args.opt == '3d':
+            img_draw = render(queue_frame[n_pre], [ver_ave], alpha=0.7)
 
         writer.append_data(img_draw[..., ::-1])  # BGR->RGB
 
@@ -108,12 +127,15 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='The demo of video of 3DDFA_V2')
+    parser = argparse.ArgumentParser(description='The smooth demo of video of 3DDFA_V2')
     parser.add_argument('-c', '--config', type=str, default='configs/mb1_120x120.yml')
     parser.add_argument('-f', '--video_fp', type=str)
     parser.add_argument('-m', '--mode', default='cpu', type=str, help='gpu or cpu mode')
     parser.add_argument('-n_pre', default=1, type=int, help='the pre frames of smoothing')
     parser.add_argument('-n_next', default=1, type=int, help='the next frames of smoothing')
+    parser.add_argument('-o', '--opt', type=str, default='2d_sparse', choices=['2d_sparse', '2d_dense', '3d'])
+    parser.add_argument('-s', '--start', default=-1, type=int, help='the started frames')
+    parser.add_argument('-e', '--end', default=-1, type=int, help='the end frame')
 
     args = parser.parse_args()
     main(args)

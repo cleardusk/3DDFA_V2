@@ -13,3 +13,6 @@ tmp/
 refine_index.py
 test*.py
 clean_git.sh
+
+websmooth.py
+demo_webcam.py
