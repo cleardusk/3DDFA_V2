@@ -35,7 +35,7 @@ def main(args):
     queue_frame = deque()
 
     # run
-    dense_flag = args.opt in ('2d_dense', '2d')
+    dense_flag = args.opt in ('2d_dense', '3d')
     pre_ver = None
     for i, frame in tqdm(enumerate(reader)):
         frame_bgr = frame[..., ::-1]  # RGB->BGR
