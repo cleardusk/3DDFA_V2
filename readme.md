@@ -117,7 +117,7 @@ Obviously, the eyes parts are not good.
 
 ### Configs
 
-The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time is evaluated using TensorFlow. The benchmark is unstable across the running time or frameworks. However, I believe the [onnxruntime](https://github.com/microsoft/onnxruntime) should perform best and maybe faster than the reported values.
+The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time is evaluated using TensorFlow. The benchmark is unstable across different runtimes or frameworks. However, I believe the [onnxruntime](https://github.com/microsoft/onnxruntime) should perform best and maybe faster than the reported values.
 
 <center>
 
