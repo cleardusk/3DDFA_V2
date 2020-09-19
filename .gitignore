@@ -16,3 +16,7 @@ clean_git.sh
 
 websmooth.py
 demo_webcam.py
+
+examples/inputs/spoof/
+weights/*.onnx
+configs/ncc_code_53215.npy
