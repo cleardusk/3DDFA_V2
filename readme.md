@@ -10,6 +10,9 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
   <img src="docs/images/out.gif" alt="demo" width="512px">
 </p>
 
+**\[Updates\]**
+ - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code) feature, see `pncc` option in [demo.py](./demo.py).
+
 ## Introduction
 
 This work extends [3DDFA](https://github.com/cleardusk/3DDFA), named **3DDFA_V2**, titled [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/out.gif) above shows a demo of the tracking result.
@@ -52,8 +55,8 @@ sh ./build.sh
 3. Run demos
 
 ```shell script
-# 1. running on still image, four options: 2d_sparse, 2d_dense, 3d, depth
-python3 demo.py -f examples/inputs/emma.jpg
+# 1. running on still image, the options include: 2d_sparse, 2d_dense, 3d, depth, pncc
+python3 demo.py -f examples/inputs/emma.jpg  # -o [2d_sparse, 2d_dense, 3d, depth, pncc]
 
 # 2. running on videos
 python3 demo_video.py -f examples/inputs/videos/214.avi
