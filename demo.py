@@ -40,8 +40,7 @@ def main(args):
     param_lst, roi_box_lst = tddfa(img, boxes)
 
     # Visualization and serialization
-    dense_flag = args.opt in (
-    '2d_dense', '3d', 'depth', 'pncc', 'uv_tex')  # if opt is 2d_dense or 3d, reconstruct dense vertices
+    dense_flag = args.opt in ('2d_dense', '3d', 'depth', 'pncc', 'uv_tex')
     ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)
 
     suffix = get_suffix(args.img_fp)
