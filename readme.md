@@ -11,7 +11,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 </p>
 
 **\[Updates\]**
- - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
+ - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture mapping features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
 
 ## Introduction
 
@@ -55,8 +55,8 @@ sh ./build.sh
 3. Run demos
 
 ```shell script
-# 1. running on still image, the options include: 2d_sparse, 2d_dense, 3d, depth, pncc
-python3 demo.py -f examples/inputs/emma.jpg  # -o [2d_sparse, 2d_dense, 3d, depth, pncc]
+# 1. running on still image, the options include: 2d_sparse, 2d_dense, 3d, depth, pncc, uv_tex
+python3 demo.py -f examples/inputs/emma.jpg  # -o [2d_sparse, 2d_dense, 3d, depth, pncc, uv_tex]
 
 # 2. running on videos
 python3 demo_video.py -f examples/inputs/videos/214.avi
@@ -78,6 +78,55 @@ For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will gi
   <img src="docs/images/emma_3d.jpg" alt="demo" width="640px">
 </p>
 
+Running on webcam will give:
+
+<p align="center">
+  <img src="docs/images/webcam.gif" alt="demo" width="480px">
+</p>
+
+
+### Features (up to now)
+
+
+<table>
+  <tr>
+    <th>2D sparse</th>
+    <th>2D dense</th>
+    <th>3D</th>
+  </tr>
+
+  <tr>
+    <td><img src="docs/images/trump_hillary_2d_sparse.jpg" width="320" alt="2d sparse"></td>
+    <td><img src="docs/images/trump_hillary_2d_dense.jpg"  width="320" alt="2d dense"></td>
+    <td><img src="docs/images/trump_hillary_3d.jpg"        width="320" alt="3d"></td>
+  </tr>
+
+  <tr>
+    <th>Depth</th>
+    <th>PNCC</th>
+    <th>UV texture</th>
+  </tr>
+
+  <tr>
+    <td><img src="docs/images/trump_hillary_depth.jpg"     width="320" alt="depth"></td>
+    <td><img src="docs/images/trump_hillary_pncc.jpg"      width="320" alt="pncc"></td>
+    <td><img src="docs/images/trump_hillary_uv_tex.jpg"    width="320" alt="uv_tex"></td>
+  </tr>
+</table>
+
+### Configs
+
+The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time is evaluated using TensorFlow. The benchmark is unstable across the running time or frameworks. However, I believe the [onnxruntime](https://github.com/microsoft/onnxruntime) should perform best and maybe faster than the reported values.
+
+<center>
+
+| Model | Input | #Params | #Macs | Inference |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+| MobileNet  | 120$\times$120 | 3.27M | 183.5M | ~6.2ms |
+| MobileNet$\times$0.5 | 120$\times$120 | 0.85M | 49.5M | ~2.9ms |
+
+</center>
+
 ## FQA
 
 1. What is the training data?
@@ -86,7 +135,8 @@ For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will gi
 
 ## Acknowledgement
 
-* The FaceBoxes module is modified from [FaceBoxes.PyTorch](https://github.com/zisianw/FaceBoxes.PyTorch)
+* The FaceBoxes module is modified from [FaceBoxes.PyTorch](https://github.com/zisianw/FaceBoxes.PyTorch).
+* A list of previous works on 3D dense face alignment or reconstruction: [3DDFA](https://github.com/cleardusk/3DDFA), [face3d](https://github.com/YadiraF/face3d), [PRNet](https://github.com/YadiraF/PRNet).
 
 ## Citation
 
