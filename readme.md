@@ -124,7 +124,7 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 | Model | Input | #Params | #Macs | Inference |
 | :-: | :-: | :-: | :-: | :-: |
 | MobileNet  | 120x120 | 3.27M | 183.5M | ~6.2ms |
-| MobileNet $\times$ 0.5 | 120x120 | 0.85M | 49.5M | ~2.9ms |
+| MobileNet x0.5 | 120x120 | 0.85M | 49.5M | ~2.9ms |
 
 </center>
 
