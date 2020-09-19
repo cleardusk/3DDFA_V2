@@ -97,6 +97,8 @@ def uv_tex(img, ver_lst, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
     if show_flag:
         plot_image(res)
 
+    return res
+
 
 def main():
     pass
