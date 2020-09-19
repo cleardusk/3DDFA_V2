@@ -18,7 +18,7 @@ def rasterize(vertices, triangles, colors, bg=None,
         height, width, channel = bg.shape
     else:
         assert height is not None and width is not None and channel is not None
-        bg = np.zeros((height, width, channel), dtype=np.float32)
+        bg = np.zeros((height, width, channel), dtype=np.uint8)
 
     buffer = np.zeros((height, width), dtype=np.float32) - 1e8
 

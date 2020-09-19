@@ -11,7 +11,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 </p>
 
 **\[Updates\]**
- - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code) feature, see `pncc` option in [demo.py](./demo.py).
+ - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
 
 ## Introduction
 

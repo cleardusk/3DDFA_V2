@@ -10,3 +10,4 @@ tqdm
 argparse
 cython
 scikit-image # skimage
+scipy

@@ -12,6 +12,7 @@ from TDDFA import TDDFA
 from utils.render import render
 from utils.depth import depth
 from utils.pncc import pncc
+from utils.uv import uv_tex
 from utils.functions import draw_landmarks, get_suffix
 from utils.tddfa_util import str2bool
 
@@ -39,7 +40,8 @@ def main(args):
     param_lst, roi_box_lst = tddfa(img, boxes)
 
     # Visualization and serialization
-    dense_flag = args.opt in ('2d_dense', '3d', 'depth', 'pncc')  # if opt is 2d_dense or 3d, reconstruct dense vertices
+    dense_flag = args.opt in (
+    '2d_dense', '3d', 'depth', 'pncc', 'uv_tex')  # if opt is 2d_dense or 3d, reconstruct dense vertices
     ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)
 
     suffix = get_suffix(args.img_fp)
@@ -56,6 +58,8 @@ def main(args):
         depth(img, ver_lst, show_flag=args.show_flag, wfp=wfp, with_bg_flag=True)
     elif args.opt == 'pncc':
         pncc(img, ver_lst, show_flag=args.show_flag, wfp=wfp, with_bg_flag=True)
+    elif args.opt == 'uv_tex':
+        uv_tex(img, ver_lst, show_flag=args.show_flag, wfp=wfp)
     else:
         raise Exception(f'Unknown opt {args.opt}')
 
@@ -66,7 +70,7 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--img_fp', type=str, default='examples/inputs/trump_hillary.jpg')
     parser.add_argument('-m', '--mode', type=str, default='cpu', help='gpu or cpu mode')
     parser.add_argument('-o', '--opt', type=str, default='2d_sparse',
-                        choices=['2d_sparse', '2d_dense', '3d', 'depth', 'pncc'])
+                        choices=['2d_sparse', '2d_dense', '3d', 'depth', 'pncc', 'uv_tex'])
     parser.add_argument('--show_flag', type=str2bool, default='true', help='whether to show the visualization result')
 
     args = parser.parse_args()
