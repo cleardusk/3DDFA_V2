@@ -12,6 +12,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 
 **\[Updates\]**
  - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture mapping features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
+ - `2020.9.20`: Add pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
 
 ## Introduction
 
@@ -55,8 +56,8 @@ sh ./build.sh
 3. Run demos
 
 ```shell script
-# 1. running on still image, the options include: 2d_sparse, 2d_dense, 3d, depth, pncc, uv_tex
-python3 demo.py -f examples/inputs/emma.jpg  # -o [2d_sparse, 2d_dense, 3d, depth, pncc, uv_tex]
+# 1. running on still image, the options include: 2d_sparse, 2d_dense, 3d, depth, pncc, pose, uv_tex, ply, obj
+python3 demo.py -f examples/inputs/emma.jpg  # -o [2d_sparse, 2d_dense, 3d, depth, pncc, pose, uv_tex, ply, obj]
 
 # 2. running on videos
 python3 demo_video.py -f examples/inputs/videos/214.avi
@@ -97,9 +98,9 @@ Obviously, the eyes parts are not good.
   </tr>
 
   <tr>
-    <td><img src="docs/images/trump_hillary_2d_sparse.jpg" width="320" alt="2d sparse"></td>
-    <td><img src="docs/images/trump_hillary_2d_dense.jpg"  width="320" alt="2d dense"></td>
-    <td><img src="docs/images/trump_hillary_3d.jpg"        width="320" alt="3d"></td>
+    <td><img src="docs/images/trump_hillary_2d_sparse.jpg" width="360" alt="2d sparse"></td>
+    <td><img src="docs/images/trump_hillary_2d_dense.jpg"  width="360" alt="2d dense"></td>
+    <td><img src="docs/images/trump_hillary_3d.jpg"        width="360" alt="3d"></td>
   </tr>
 
   <tr>
@@ -109,17 +110,21 @@ Obviously, the eyes parts are not good.
   </tr>
 
   <tr>
-    <td><img src="docs/images/trump_hillary_depth.jpg"     width="320" alt="depth"></td>
-    <td><img src="docs/images/trump_hillary_pncc.jpg"      width="320" alt="pncc"></td>
-    <td><img src="docs/images/trump_hillary_uv_tex.jpg"    width="320" alt="uv_tex"></td>
+    <td><img src="docs/images/trump_hillary_depth.jpg"     width="360" alt="depth"></td>
+    <td><img src="docs/images/trump_hillary_pncc.jpg"      width="360" alt="pncc"></td>
+    <td><img src="docs/images/trump_hillary_uv_tex.jpg"    width="360" alt="uv_tex"></td>
   </tr>
 
   <tr>
     <th>Pose</th>
+    <th>Serialization to .ply</th>
+    <th>Serialization to .obj</th>
   </tr>
 
   <tr>
-    <td><img src="docs/images/trump_hillary_pose.jpg" width="320" alt="pose"></td>
+    <td><img src="docs/images/trump_hillary_pose.jpg"      width="360" alt="pose"></td>
+    <td><img src="docs/images/ply.jpg"                     width="360" alt="ply"></td>
+    <td><img src="docs/images/obj.jpg"                     width="360" alt="obj"></td>
   </tr>
 
 </table>
