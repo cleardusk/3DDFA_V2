@@ -11,8 +11,9 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 </p>
 
 **\[Updates\]**
+ - `2020.9.20`: Add features including pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
  - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture mapping features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
- - `2020.9.20`: Add pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
+
 
 ## Introduction
 
@@ -133,14 +134,12 @@ Obviously, the eyes parts are not good.
 
 The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time is evaluated using TensorFlow. The benchmark is unstable across different runtimes or frameworks. However, I believe the [onnxruntime](https://github.com/microsoft/onnxruntime) should perform best and maybe faster than the reported values.
 
-<center>
 
 | Model | Input | #Params | #Macs | Inference |
 | :-: | :-: | :-: | :-: | :-: |
 | MobileNet  | 120x120 | 3.27M | 183.5M | ~6.2ms |
 | MobileNet x0.5 | 120x120 | 0.85M | 49.5M | ~2.9ms |
 
-</center>
 
 ## FQA
 
