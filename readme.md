@@ -113,6 +113,15 @@ Obviously, the eyes parts are not good.
     <td><img src="docs/images/trump_hillary_pncc.jpg"      width="320" alt="pncc"></td>
     <td><img src="docs/images/trump_hillary_uv_tex.jpg"    width="320" alt="uv_tex"></td>
   </tr>
+
+  <tr>
+    <th>Pose</th>
+  </tr>
+
+  <tr>
+    <td><img src="docs/images/trump_hillary_pose.jpg" width="320" alt="pose"></td>
+  </tr>
+
 </table>
 
 ### Configs
