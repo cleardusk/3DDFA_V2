@@ -116,7 +116,6 @@ class FaceBoxes:
 
         # do NMS
         dets = np.hstack((boxes, scores[:, np.newaxis])).astype(np.float32, copy=False)
-        # keep = py_cpu_nms(dets, args.nms_threshold)
         keep = nms(dets, nms_threshold)
         dets = dets[keep, :]
 
@@ -133,8 +132,6 @@ class FaceBoxes:
         for b in dets:
             if b[4] > vis_thres:
                 xmin, ymin, xmax, ymax, score = b[0], b[1], b[2], b[3], b[4]
-                w = xmax - xmin + 1
-                h = ymax - ymin + 1
                 bbox = [xmin, ymin, xmax, ymax, score]
                 det_bboxes.append(bbox)
 

@@ -63,17 +63,17 @@ def bilinear_interpolate(img, x, y):
     y0 = np.clip(y0, 0, img.shape[0] - 1)
     y1 = np.clip(y1, 0, img.shape[0] - 1)
 
-    Ia = img[y0, x0]
-    Ib = img[y1, x0]
-    Ic = img[y0, x1]
-    Id = img[y1, x1]
+    i_a = img[y0, x0]
+    i_b = img[y1, x0]
+    i_c = img[y0, x1]
+    i_d = img[y1, x1]
 
     wa = (x1 - x) * (y1 - y)
     wb = (x1 - x) * (y - y0)
     wc = (x - x0) * (y1 - y)
     wd = (x - x0) * (y - y0)
 
-    return wa[..., np.newaxis] * Ia + wb[..., np.newaxis] * Ib + wc[..., np.newaxis] * Ic + wd[..., np.newaxis] * Id
+    return wa[..., np.newaxis] * i_a + wb[..., np.newaxis] * i_b + wc[..., np.newaxis] * i_c + wd[..., np.newaxis] * i_d
 
 
 def uv_tex(img, ver_lst, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
@@ -99,10 +99,3 @@ def uv_tex(img, ver_lst, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
 
     return res
 
-
-def main():
-    pass
-
-
-if __name__ == '__main__':
-    main()

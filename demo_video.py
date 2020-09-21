@@ -66,7 +66,7 @@ def main(args):
         elif args.opt == '3d':
             res = render(frame_bgr, [ver])
         else:
-            raise Exception(f'Unknown opt {args.opt}')
+            raise ValueError(f'Unknown opt {args.opt}')
 
         writer.append_data(res[..., ::-1])  # BGR->RGB
 

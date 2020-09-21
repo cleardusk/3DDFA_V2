@@ -34,15 +34,15 @@ def ser_to_ply_single(ver_lst, height, wfp, reverse=True):
             for i in range(n_vertex):
                 x, y, z = ver[:, i]
                 if reverse:
-                    f.write('{:.2f} {:.2f} {:.2f}\n'.format(x, height - y, z))
+                    f.write(f'{x:.2f} {height-y:.2f} {z:.2f}\n')
                 else:
-                    f.write('{:.2f} {:.2f} {:.2f}\n'.format(x, y, z))
+                    f.write(f'{x:.2f} {y:.2f} {z:.2f}\n')
             for i in range(n_face):
                 idx1, idx2, idx3 = tri[i]  # m x 3
                 if reverse:
-                    f.write('3 {} {} {}\n'.format(idx3, idx2, idx1))
+                    f.write(f'3 {idx3} {idx2} {idx1}\n')
                 else:
-                    f.write('3 {} {} {}\n'.format(idx1, idx2, idx3))
+                    f.write(f'3 {idx1} {idx2} {idx3}\n')
 
         print(f'Dump tp {wfp_new}')
 
@@ -65,18 +65,18 @@ def ser_to_ply_multiple(ver_lst, height, wfp, reverse=True):
             for j in range(n_vertex):
                 x, y, z = ver[:, j]
                 if reverse:
-                    f.write('{:.2f} {:.2f} {:.2f}\n'.format(x, height - y, z))
+                    f.write(f'{x:.2f} {height - y:.2f} {z:.2f}\n')
                 else:
-                    f.write('{:.2f} {:.2f} {:.2f}\n'.format(x, y, z))
+                    f.write(f'{x:.2f} {y:.2f} {z:.2f}\n')
 
         for i in range(n_ply):
             offset = i * n_vertex
             for j in range(n_face):
                 idx1, idx2, idx3 = tri[j]  # m x 3
                 if reverse:
-                    f.write('3 {} {} {}\n'.format(idx3 + offset, idx2 + offset, idx1 + offset))
+                    f.write(f'3 {idx3 + offset} {idx2 + offset} {idx1 + offset}\n')
                 else:
-                    f.write('3 {} {} {}\n'.format(idx1 + offset, idx2 + offset, idx3 + offset))
+                    f.write(f'3 {idx1 + offset} {idx2 + offset} {idx3 + offset}\n')
 
     print(f'Dump tp {wfp}')
 

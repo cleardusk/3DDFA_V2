@@ -62,11 +62,11 @@ def main(args):
             ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
             # padding queue
-            for j in range(n_pre):
+            for _ in range(n_pre):
                 queue_ver.append(ver.copy())
             queue_ver.append(ver.copy())
 
-            for j in range(n_pre):
+            for _ in range(n_pre):
                 queue_frame.append(frame_bgr.copy())
             queue_frame.append(frame_bgr.copy())
 
@@ -97,6 +97,8 @@ def main(args):
                 img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
             elif args.opt == '3d':
                 img_draw = render(queue_frame[n_pre], [ver_ave], alpha=0.7)
+            else:
+                raise ValueError(f'Unknown opt {args.opt}')
 
             writer.append_data(img_draw[:, :, ::-1])  # BGR->RGB
 
@@ -104,7 +106,7 @@ def main(args):
             queue_frame.popleft()
 
     # we will lost the last n_next frames, still padding
-    for j in range(n_next):
+    for _ in range(n_next):
         queue_ver.append(ver.copy())
         queue_frame.append(frame_bgr.copy())  # the last frame
 
@@ -116,6 +118,8 @@ def main(args):
             img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
         elif args.opt == '3d':
             img_draw = render(queue_frame[n_pre], [ver_ave], alpha=0.7)
+        else:
+            raise ValueError(f'Unknown opt {args.opt}')
 
         writer.append_data(img_draw[..., ::-1])  # BGR->RGB
 

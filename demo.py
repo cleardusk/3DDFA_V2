@@ -70,7 +70,7 @@ def main(args):
     elif args.opt == 'obj':
         ser_to_obj(img, ver_lst, height=img.shape[0], wfp=wfp)
     else:
-        raise Exception(f'Unknown opt {args.opt}')
+        raise ValueError(f'Unknown opt {args.opt}')
 
 
 if __name__ == '__main__':

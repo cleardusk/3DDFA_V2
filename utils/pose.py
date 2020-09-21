@@ -27,7 +27,6 @@ def P2sRt(P):
     t3d = P[:, 3]
     R1 = P[0:1, :3]
     R2 = P[1:2, :3]
-    R3 = P[2:3, :3]
     s = (np.linalg.norm(R1) + np.linalg.norm(R2)) / 2.0
     r1 = R1 / np.linalg.norm(R1)
     r2 = R2 / np.linalg.norm(R2)
@@ -48,11 +47,6 @@ def matrix2angle(R):
          y: pitch
          z: roll
      """
-    # assert(isRotationMatrix(R))
-
-    # sy = sqrt(R[0, 0] ** 2 + R[1, 0] ** 2)
-    # print(sy)
-
     if R[2, 0] > 0.998:
         z = 0
         x = np.pi / 2

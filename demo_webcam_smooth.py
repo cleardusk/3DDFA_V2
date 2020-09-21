@@ -52,11 +52,11 @@ def main(args):
             ver = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)[0]
 
             # padding queue
-            for j in range(n_pre):
+            for _ in range(n_pre):
                 queue_ver.append(ver.copy())
             queue_ver.append(ver.copy())
 
-            for j in range(n_pre):
+            for _ in range(n_pre):
                 queue_frame.append(frame_bgr.copy())
             queue_frame.append(frame_bgr.copy())
         else:

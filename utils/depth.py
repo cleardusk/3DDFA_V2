@@ -25,8 +25,6 @@ def depth(img, ver_lst, show_flag=False, wfp=None, with_bg_flag=True):
 
         z = ver[:, 2]
         z_min, z_max = min(z), max(z)
-        # ver[:, 2] = (z - z_min) / (z_max - z_min)
-        # z = ver[:, 2:]
 
         z = (z - z_min) / (z_max - z_min)
 

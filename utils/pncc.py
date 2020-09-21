@@ -21,7 +21,7 @@ make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 def calc_ncc_code():
     from bfm import bfm
 
-    # ncc_d = ( u_d - min(u_d) ) / ( max(u_d) - min(u_d) ), d = {r, g, b}
+    # formula: ncc_d = ( u_d - min(u_d) ) / ( max(u_d) - min(u_d) ), d = {r, g, b}
     u = bfm.u
     u = u.reshape(3, -1, order='F')
 

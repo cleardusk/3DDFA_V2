@@ -88,7 +88,7 @@ class TDDFA(object):
                 # by landmarks
                 roi_box = parse_roi_box_from_landmark(obj)
             else:
-                raise Exception(f'Unknown crop policy {crop_policy}')
+                raise ValueError(f'Unknown crop policy {crop_policy}')
 
             roi_box_lst.append(roi_box)
             img = crop_img(img_ori, roi_box)
@@ -120,10 +120,8 @@ class TDDFA(object):
         ver_lst = []
         for param, roi_box in zip(param_lst, roi_box_lst):
             if dense_flag:
-                # pts_dense = predict_dense(param, roi_box)
                 pts3d = recon_dense(param, roi_box, size)
             else:
-                # pts68 = predict_68pts(param, roi_box)
                 pts3d = recon_sparse(param, roi_box, size)  # 68 pts
 
             ver_lst.append(pts3d)
