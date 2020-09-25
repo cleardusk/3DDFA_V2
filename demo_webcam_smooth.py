@@ -12,6 +12,7 @@ from collections import deque
 
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
+from utils.render import render
 from utils.functions import cv_draw_landmark
 
 
@@ -79,7 +80,16 @@ def main(args):
         # smoothing: enqueue and dequeue ops
         if len(queue_ver) >= n:
             ver_ave = np.mean(queue_ver, axis=0)
-            img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
+
+            if args.opt == '2d_sparse':
+                img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave)  # since we use padding
+            elif args.opt == '2d_dense':
+                img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
+            elif args.opt == '3d':
+                img_draw = render(queue_frame[n_pre], [ver_ave], alpha=0.7)
+            else:
+                raise ValueError(f'Unknown opt {args.opt}')
+
             cv2.imshow('image', img_draw)
             k = cv2.waitKey(20)
             if (k & 0xff == ord('q')):
@@ -93,7 +103,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='The smooth demo of webcam of 3DDFA_V2')
     parser.add_argument('-c', '--config', type=str, default='configs/mb1_120x120.yml')
     parser.add_argument('-m', '--mode', default='cpu', type=str, help='gpu or cpu mode')
-    parser.add_argument('-o', '--opt', type=str, default='2d', choices=['2d', '3d', '2d_dense'])
+    parser.add_argument('-o', '--opt', type=str, default='2d_sparse', choices=['2d_sparse', '2d_dense', '3d'])
     parser.add_argument('-n_pre', default=1, type=int, help='the pre frames of smoothing')
     parser.add_argument('-n_next', default=1, type=int, help='the next frames of smoothing')
 
