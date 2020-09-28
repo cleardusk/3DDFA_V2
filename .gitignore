@@ -22,3 +22,4 @@ weights/*.onnx
 configs/ncc_code_53215.npy
 pr.*
 *.docx
+render_3dface.ipynb
