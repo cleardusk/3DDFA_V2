@@ -7,9 +7,11 @@
 
 By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/), [Yang Yang](http://www.cbsr.ia.ac.cn/users/yyang/main.htm), Fan Yang, [Zhen Lei](http://www.cbsr.ia.ac.cn/users/zlei/) and [Stan Z. Li](https://scholar.google.com/citations?user=Y-nyLGIAAAAJ). The code repo is maintained by **[Jianzhu Guo](https://guojianzhu.com)**.
 
+
 <p align="center">
-  <img src="docs/images/out.gif" alt="demo" width="512px">
+  <img src="docs/images/webcam.gif" alt="demo" width="512px">
 </p>
+
 
 **\[Updates\]**
  - `2020.9.20`: Add features including pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
@@ -18,8 +20,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 
 ## Introduction
 
-This work extends [3DDFA](https://github.com/cleardusk/3DDFA), named **3DDFA_V2**, titled [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/out.gif) above shows a demo of the tracking result.
-This repo is the official implementation of 3DDFA_V2.
+This work extends [3DDFA](https://github.com/cleardusk/3DDFA), named **3DDFA_V2**, titled [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/webcam.gif) above shows a webcam demo of the tracking result, in the scenario of my lab. This repo is the official implementation of 3DDFA_V2.
 
 Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves better performance and stability. Besides, 3DDFA_V2 incorporates the fast face detector [FaceBoxes](https://github.com/zisianw/FaceBoxes.PyTorch) instead of Dlib. A simple 3D render written by c++ and cython is also included. If you are interested in this repo, just try it on this **[google colab](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv)**! Welcome for valuable issues and PRs 😄
 
@@ -81,13 +82,20 @@ For example, running `python3 demo.py -f examples/inputs/emma.jpg -o 3d` will gi
   <img src="docs/images/emma_3d.jpg" alt="demo" width="640px">
 </p>
 
-Running on webcam will give:
+Another example:
 
 <p align="center">
-  <img src="docs/images/webcam.gif" alt="demo" width="480px">
+  <img src="docs/images/trump_biden_3d.jpg" alt="demo" width="640px">
 </p>
 
-Obviously, the eyes parts are not good.
+Running on a video will give:
+
+<p align="center">
+  <img src="docs/images/out.gif" alt="demo" width="512px">
+</p>
+
+
+<!-- Obviously, the eyes parts are not good. -->
 
 ### Features (up to now)
 
@@ -146,7 +154,7 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 
 1. What is the training data?
 
-    We use [300W-LP](https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing) for training. You can refer to our [paper](https://guojianzhu.com/assets/pdfs/3162.pdf) for more details about the training. Since few images are closed-eyes in the training data 300W-LP, the landmarks of eyes are not accurate when closing.
+    We use [300W-LP](https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing) for training. You can refer to our [paper](https://guojianzhu.com/assets/pdfs/3162.pdf) for more details about the training. Since few images are closed-eyes in the training data 300W-LP, the landmarks of eyes are not accurate when closing. The eyes part of the webcam demo are also not good.  
 
 ## Acknowledgement
 
