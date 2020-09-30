@@ -61,7 +61,7 @@ def main(args):
 
         pre_ver = ver  # for tracking
 
-        if args.opt == '2d':
+        if args.opt == '2d_sparse':
             res = cv_draw_landmark(frame_bgr, ver)
         elif args.opt == '3d':
             res = render(frame_bgr, [ver])
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--config', type=str, default='configs/mb1_120x120.yml')
     parser.add_argument('-f', '--video_fp', type=str)
     parser.add_argument('-m', '--mode', default='cpu', type=str, help='gpu or cpu mode')
-    parser.add_argument('-o', '--opt', type=str, default='2d', choices=['2d', '3d'])
+    parser.add_argument('-o', '--opt', type=str, default='2d_sparse', choices=['2d_sparse', '3d'])
 
     args = parser.parse_args()
     main(args)
