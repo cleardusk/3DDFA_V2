@@ -154,7 +154,11 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 
 1. What is the training data?
 
-    We use [300W-LP](https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing) for training. You can refer to our [paper](https://guojianzhu.com/assets/pdfs/3162.pdf) for more details about the training. Since few images are closed-eyes in the training data 300W-LP, the landmarks of eyes are not accurate when closing. The eyes part of the webcam demo are also not good.  
+    We use [300W-LP](https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing) for training. You can refer to our [paper](https://guojianzhu.com/assets/pdfs/3162.pdf) for more details about the training. Since few images are closed-eyes in the training data 300W-LP, the landmarks of eyes are not accurate when closing. The eyes part of the webcam demo are also not good.
+
+2. Running on Windows.
+
+    You can refer to [this comment](https://github.com/cleardusk/3DDFA_V2/issues/12#issuecomment-697479173) for building NMS on Windows.
 
 ## Acknowledgement
 
