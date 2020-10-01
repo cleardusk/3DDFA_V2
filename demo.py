@@ -43,7 +43,7 @@ def main(args):
         print(f'No face detected, exit')
         sys.exit(-1)
 
-    param_lst, roi_box_lst = tddfa(img, boxes, timer_flag=True)
+    param_lst, roi_box_lst = tddfa(img, boxes)
 
     # Visualization and serialization
     dense_flag = args.opt in ('2d_dense', '3d', 'depth', 'pncc', 'uv_tex', 'ply', 'obj')
