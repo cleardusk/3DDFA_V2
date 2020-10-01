@@ -11,3 +11,4 @@ argparse
 cython
 scikit-image # skimage
 scipy
+onnxrumtime

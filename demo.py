@@ -20,10 +20,14 @@ from utils.tddfa_util import str2bool
 
 
 def main(args):
-    # Init TDDFA
+    # Init TDDFA or TDDFA_ONNX
     cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
-    gpu_mode = args.mode == 'gpu'
-    tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
+    if args.onnx:
+        from TDDFA_ONNX import TDDFA_ONNX
+        tddfa = TDDFA_ONNX(**cfg)
+    else:
+        gpu_mode = args.mode == 'gpu'
+        tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
 
     # Init FaceBoxes
     face_boxes = FaceBoxes()
@@ -39,7 +43,7 @@ def main(args):
         print(f'No face detected, exit')
         sys.exit(-1)
 
-    param_lst, roi_box_lst = tddfa(img, boxes)
+    param_lst, roi_box_lst = tddfa(img, boxes, timer_flag=True)
 
     # Visualization and serialization
     dense_flag = args.opt in ('2d_dense', '3d', 'depth', 'pncc', 'uv_tex', 'ply', 'obj')
@@ -48,7 +52,7 @@ def main(args):
 
     wfp = f'examples/results/{args.img_fp.split("/")[-1].replace(old_suffix, "")}_{args.opt}' + new_suffix
 
-    ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)
+    ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag, timer_flag=True)
 
     if args.opt == '2d_sparse':
         draw_landmarks(img, ver_lst, show_flag=args.show_flag, dense_flag=dense_flag, wfp=wfp)
@@ -81,6 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--opt', type=str, default='2d_sparse',
                         choices=['2d_sparse', '2d_dense', '3d', 'depth', 'pncc', 'uv_tex', 'pose', 'ply', 'obj'])
     parser.add_argument('--show_flag', type=str2bool, default='true', help='whether to show the visualization result')
+    parser.add_argument('--onnx', action='store_true', default=False)
 
     args = parser.parse_args()
     main(args)
