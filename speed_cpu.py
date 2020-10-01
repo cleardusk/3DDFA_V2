@@ -12,7 +12,7 @@ os.environ["OMP_NUM_THREADS"] = "4"
 import numpy as np
 import onnxruntime
 
-onnx_fp = "weights/mb05_120x120.onnx" # if not existed, convert it, see "convert_to_onnx function in utils/onnx.py"
+onnx_fp = "weights/mb1_120x120.onnx" # if not existed, convert it, see "convert_to_onnx function in utils/onnx.py"
 session = onnxruntime.InferenceSession(onnx_fp, None)
 
 img = np.random.randn(1, 3, 120, 120).astype(np.float32)
