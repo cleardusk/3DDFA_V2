@@ -3,6 +3,9 @@
 __author__ = 'cleardusk'
 
 import os
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ["OMP_NUM_THREADS"] = "4"
+
 import os.path as osp
 import time
 import numpy as np
@@ -16,7 +19,6 @@ from utils.functions import (
 )
 from utils.tddfa_util import recon_dense, recon_sparse
 
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 
 

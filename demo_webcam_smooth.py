@@ -17,9 +17,14 @@ from utils.functions import cv_draw_landmark
 
 
 def main(args):
+    # Init TDDFA or TDDFA_ONNX
     cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
-    gpu_mode = args.mode == 'gpu'
-    tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
+    if args.onnx:
+        from TDDFA_ONNX import TDDFA_ONNX
+        tddfa = TDDFA_ONNX(**cfg)
+    else:
+        gpu_mode = args.mode == 'gpu'
+        tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
 
     # Initialize FaceBoxes
     face_boxes = FaceBoxes()
@@ -106,6 +111,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--opt', type=str, default='2d_sparse', choices=['2d_sparse', '2d_dense', '3d'])
     parser.add_argument('-n_pre', default=1, type=int, help='the pre frames of smoothing')
     parser.add_argument('-n_next', default=1, type=int, help='the next frames of smoothing')
+    parser.add_argument('--onnx', action='store_true', default=False)
 
     args = parser.parse_args()
     main(args)

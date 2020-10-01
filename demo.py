@@ -52,7 +52,7 @@ def main(args):
 
     wfp = f'examples/results/{args.img_fp.split("/")[-1].replace(old_suffix, "")}_{args.opt}' + new_suffix
 
-    ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag, timer_flag=True)
+    ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)
 
     if args.opt == '2d_sparse':
         draw_landmarks(img, ver_lst, show_flag=args.show_flag, dense_flag=dense_flag, wfp=wfp)
