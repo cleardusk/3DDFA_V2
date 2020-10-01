@@ -14,6 +14,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 
 
 **\[Updates\]**
+ - `2020.10.2`: **Add onnxruntime support to greatly reduce the inference latency**, just append the `--onnx` action when running `demo.py`, see [TDDFA_ONNX.py](./TDDFA_ONNX.py) for details.
  - `2020.9.20`: Add features including pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
  - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture mapping features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
 
@@ -22,14 +23,14 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 
 This work extends [3DDFA](https://github.com/cleardusk/3DDFA), named **3DDFA_V2**, titled [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/webcam.gif) above shows a webcam demo of the tracking result, in the scenario of my lab. This repo is the official implementation of 3DDFA_V2.
 
-Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves better performance and stability. Besides, 3DDFA_V2 incorporates the fast face detector [FaceBoxes](https://github.com/zisianw/FaceBoxes.PyTorch) instead of Dlib. A simple 3D render written by c++ and cython is also included. If you are interested in this repo, just try it on this **[google colab](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv)**! Welcome for valuable issues and PRs 😄
+Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves better performance and stability. Besides, 3DDFA_V2 incorporates the fast face detector [FaceBoxes](https://github.com/zisianw/FaceBoxes.PyTorch) instead of Dlib. A simple 3D render written by c++ and cython is also included. This repo supports the onnxruntime, and the inference latency of default backbone is about **1.35ms/image** with a single image as input. If you are interested in this repo, just try it on this **[google colab](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv)**! Welcome for valuable issues and PRs 😄
 
 <!-- Currently, the pre-trained model, inference code and some utilities are released.  -->
 
 ## Getting started
 
 ### Requirements
-See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. Note that this repo uses Python3. The major dependencies are PyTorch, numpy and opencv-python, etc.
+See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. Note that this repo uses Python3. The major dependencies are PyTorch, numpy, opencv-python and onnxruntime, etc.
 
 ### Usage
 
@@ -60,16 +61,16 @@ sh ./build.sh
 
 ```shell script
 # 1. running on still image, the options include: 2d_sparse, 2d_dense, 3d, depth, pncc, pose, uv_tex, ply, obj
-python3 demo.py -f examples/inputs/emma.jpg  # -o [2d_sparse, 2d_dense, 3d, depth, pncc, pose, uv_tex, ply, obj]
+python3 demo.py -f examples/inputs/emma.jpg --onnx # -o [2d_sparse, 2d_dense, 3d, depth, pncc, pose, uv_tex, ply, obj]
 
 # 2. running on videos
-python3 demo_video.py -f examples/inputs/videos/214.avi
+python3 demo_video.py -f examples/inputs/videos/214.avi --onnx
 
 # 3. running on videos smoothly by looking ahead by `n_next` frames
-python3 demo_video_smooth.py -f examples/inputs/videos/214.avi
+python3 demo_video_smooth.py -f examples/inputs/videos/214.avi --onnx
 
 # 4. running on webcam
-python3 demo_webcam_smooth.py
+python3 demo_webcam_smooth.py --onnx
 ```
 
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. A threshold is used to trickly check the tracking state, but it is unstable.
@@ -141,13 +142,21 @@ Running on a video will give:
 
 ### Configs
 
-The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time is evaluated using TensorFlow. The benchmark is unstable across different runtimes or frameworks. However, I believe the [onnxruntime](https://github.com/microsoft/onnxruntime) should perform best and maybe faster than the reported values.
+The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time in the paper is evaluated using TensorFlow.
 
-
-| Model | Input | #Params | #Macs | Inference |
-| :-: | :-: | :-: | :-: | :-: |
+| Model | Input | #Params | #Macs | Inference (TF) |
+| :-: | :-: | :-: | :-: | :-: | :-: |
 | MobileNet  | 120x120 | 3.27M | 183.5M | ~6.2ms |
 | MobileNet x0.5 | 120x120 | 0.85M | 49.5M | ~2.9ms |
+
+
+**Surprisingly**, the latency of [onnxruntime](https://github.com/microsoft/onnxruntime) is much smaller, shown below. The results are tested on my MBP (i5-8259U CPU @ 2.30GHz on 13-inch MacBook Pro), with the `1.5.1` version of onnxruntime. The thread number is set by `os.environ["OMP_NUM_THREADS"]`, see [speed_cpu.py](./speed_cpu.py) for more details.
+
+| Model \ OMP_NUM_THREADS = | 1 | 2 | 4 |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+| MobileNet  | 4.4ms  | 2.25ms | 1.35ms |
+| MobileNet x0.5 | 1.37ms | 0.7ms | 0.5ms |
+
 
 
 ## FQA
