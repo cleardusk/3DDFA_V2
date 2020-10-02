@@ -91,7 +91,7 @@ def main(args):
             elif args.opt == '2d_dense':
                 img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
             elif args.opt == '3d':
-                img_draw = render(queue_frame[n_pre], [ver_ave], alpha=0.7)
+                img_draw = render(queue_frame[n_pre], [ver_ave], tddfa.bfm.tri, alpha=0.7)
             else:
                 raise ValueError(f'Unknown opt {args.opt}')
 

@@ -4,7 +4,7 @@ __author__ = 'cleardusk'
 
 import numpy as np
 
-from .tddfa_util import _to_ctype, tri
+from .tddfa_util import _to_ctype
 from .functions import get_suffix
 
 header_temp = """ply
@@ -19,7 +19,7 @@ end_header
 """
 
 
-def ser_to_ply_single(ver_lst, height, wfp, reverse=True):
+def ser_to_ply_single(ver_lst, tri, height, wfp, reverse=True):
     suffix = get_suffix(wfp)
 
     for i, ver in enumerate(ver_lst):
@@ -47,7 +47,7 @@ def ser_to_ply_single(ver_lst, height, wfp, reverse=True):
         print(f'Dump tp {wfp_new}')
 
 
-def ser_to_ply_multiple(ver_lst, height, wfp, reverse=True):
+def ser_to_ply_multiple(ver_lst, tri, height, wfp, reverse=True):
     n_ply = len(ver_lst)  # count ply
 
     if n_ply <= 0:
@@ -91,7 +91,7 @@ def get_colors(img, ver):
     return colors.copy()
 
 
-def ser_to_obj_single(img, ver_lst, height, wfp):
+def ser_to_obj_single(img, ver_lst, tri, height, wfp):
     suffix = get_suffix(wfp)
 
     n_face = tri.shape[0]
@@ -114,7 +114,7 @@ def ser_to_obj_single(img, ver_lst, height, wfp):
         print(f'Dump tp {wfp_new}')
 
 
-def ser_to_obj_multiple(img, ver_lst, height, wfp):
+def ser_to_obj_multiple(img, ver_lst, tri, height, wfp):
     n_obj = len(ver_lst)  # count obj
 
     if n_obj <= 0:

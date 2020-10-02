@@ -1,5 +1,6 @@
 arch: mobilenet # MobileNet V1
 widen_factor: 0.5
 checkpoint_fp: weights/mb05_120x120.pth
+bfm_fp: configs/bfm_noneck_v3.pkl # or configs/bfm_noneck_v3_slim.pkl
 size: 120
 num_params: 62

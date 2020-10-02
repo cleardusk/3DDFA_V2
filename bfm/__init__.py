@@ -1,1 +1,1 @@
-from .bfm import bfm, tri
+from .bfm import BFMModel

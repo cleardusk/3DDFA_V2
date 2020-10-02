@@ -22,6 +22,7 @@ from utils.tddfa_util import str2bool
 def main(args):
     # Init TDDFA or TDDFA_ONNX
     cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
+
     if args.onnx:
         from TDDFA_ONNX import TDDFA_ONNX
         tddfa = TDDFA_ONNX(**cfg)
@@ -59,20 +60,20 @@ def main(args):
     elif args.opt == '2d_dense':
         draw_landmarks(img, ver_lst, show_flag=args.show_flag, dense_flag=dense_flag, wfp=wfp)
     elif args.opt == '3d':
-        render(img, ver_lst, alpha=0.6, show_flag=args.show_flag, wfp=wfp)
+        render(img, ver_lst, tddfa.bfm.tri, alpha=0.6, show_flag=args.show_flag, wfp=wfp)
     elif args.opt == 'depth':
         # if `with_bf_flag` is False, the background is black
-        depth(img, ver_lst, show_flag=args.show_flag, wfp=wfp, with_bg_flag=True)
+        depth(img, ver_lst, tddfa.bfm.tri, show_flag=args.show_flag, wfp=wfp, with_bg_flag=True)
     elif args.opt == 'pncc':
-        pncc(img, ver_lst, show_flag=args.show_flag, wfp=wfp, with_bg_flag=True)
+        pncc(img, ver_lst, tddfa.bfm.tri, show_flag=args.show_flag, wfp=wfp, with_bg_flag=True)
     elif args.opt == 'uv_tex':
-        uv_tex(img, ver_lst, show_flag=args.show_flag, wfp=wfp)
+        uv_tex(img, ver_lst, tddfa.bfm.tri, show_flag=args.show_flag, wfp=wfp)
     elif args.opt == 'pose':
         viz_pose(img, param_lst, ver_lst, show_flag=args.show_flag, wfp=wfp)
     elif args.opt == 'ply':
-        ser_to_ply(ver_lst, height=img.shape[0], wfp=wfp)
+        ser_to_ply(ver_lst, tddfa.bfm.tri, height=img.shape[0], wfp=wfp)
     elif args.opt == 'obj':
-        ser_to_obj(img, ver_lst, height=img.shape[0], wfp=wfp)
+        ser_to_obj(img, ver_lst, tddfa.bfm.tri, height=img.shape[0], wfp=wfp)
     else:
         raise ValueError(f'Unknown opt {args.opt}')
 

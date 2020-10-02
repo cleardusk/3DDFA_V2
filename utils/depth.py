@@ -11,10 +11,10 @@ import numpy as np
 
 from Sim3DR import rasterize
 from utils.functions import plot_image
-from .tddfa_util import _to_ctype, tri
+from .tddfa_util import _to_ctype
 
 
-def depth(img, ver_lst, show_flag=False, wfp=None, with_bg_flag=True):
+def depth(img, ver_lst, tri, show_flag=False, wfp=None, with_bg_flag=True):
     if with_bg_flag:
         overlap = img.copy()
     else:

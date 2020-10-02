@@ -9,19 +9,17 @@ sys.path.append('..')
 import argparse
 import numpy as np
 import torch
-from bfm import bfm, tri
 
+
+# use global for accelerating
+# u_base, w_shp_base, w_exp_base = bfm.u_base, bfm.w_shp_base, bfm.w_exp_base
+# u, w_shp, w_exp = bfm.u, bfm.w_shp, bfm.w_exp
+# tri = _to_ctype(tri.T).astype(np.int32)
 
 def _to_ctype(arr):
     if not arr.flags.c_contiguous:
         return arr.copy(order='C')
     return arr
-
-
-# use global for accelerating
-u_base, w_shp_base, w_exp_base = bfm.u_base, bfm.w_shp_base, bfm.w_exp_base
-u, w_shp, w_exp = bfm.u, bfm.w_shp, bfm.w_exp
-tri = _to_ctype(tri.T).astype(np.int32)
 
 
 def str2bool(v):
@@ -97,18 +95,17 @@ def _parse_param(param):
 
     return R, offset, alpha_shp, alpha_exp
 
-
-def recon_sparse(param, roi_box, size):
-    """68 3d landmarks reconstruction from 62: matrix pose form"""
-    R, offset, alpha_shp, alpha_exp = _parse_param(param)
-    pts3d = R @ (u_base + w_shp_base @ alpha_shp + w_exp_base @ alpha_exp).reshape(3, -1, order='F') + offset
-    pts3d = similar_transform(pts3d, roi_box, size)
-    return pts3d
-
-
-def recon_dense(param, roi_box, size):
-    """Dense points reconstruction: 53215 points"""
-    R, offset, alpha_shp, alpha_exp = _parse_param(param)
-    pts3d = R @ (u + w_shp @ alpha_shp + w_exp @ alpha_exp).reshape(3, -1, order='F') + offset
-    pts3d = similar_transform(pts3d, roi_box, size)
-    return pts3d
+# def recon_sparse(param, roi_box, size):
+#     """68 3d landmarks reconstruction from 62: matrix pose form"""
+#     R, offset, alpha_shp, alpha_exp = _parse_param(param)
+#     pts3d = R @ (u_base + w_shp_base @ alpha_shp + w_exp_base @ alpha_exp).reshape(3, -1, order='F') + offset
+#     pts3d = similar_transform(pts3d, roi_box, size)
+#     return pts3d
+#
+#
+# def recon_dense(param, roi_box, size):
+#     """Dense points reconstruction: 53215 points"""
+#     R, offset, alpha_shp, alpha_exp = _parse_param(param)
+#     pts3d = R @ (u + w_shp @ alpha_shp + w_exp @ alpha_exp).reshape(3, -1, order='F') + offset
+#     pts3d = similar_transform(pts3d, roi_box, size)
+#     return pts3d

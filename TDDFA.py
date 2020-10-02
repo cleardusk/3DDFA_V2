@@ -11,14 +11,14 @@ from torchvision.transforms import Compose
 import torch.backends.cudnn as cudnn
 
 import models
+from bfm import BFMModel
 from utils.io import _load
 from utils.functions import (
     crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,
 )
 from utils.tddfa_util import (
-    load_model,
-    ToTensorGjz, NormalizeGjz,
-    recon_dense, recon_sparse
+    load_model, _parse_param, similar_transform,
+    ToTensorGjz, NormalizeGjz
 )
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
@@ -29,6 +29,9 @@ class TDDFA(object):
 
     def __init__(self, **kvs):
         torch.set_grad_enabled(False)
+
+        # load BFM
+        self.bfm = BFMModel(kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')))
 
         # config
         self.gpu_mode = kvs.get('gpu_mode', False)
@@ -120,9 +123,17 @@ class TDDFA(object):
         ver_lst = []
         for param, roi_box in zip(param_lst, roi_box_lst):
             if dense_flag:
-                pts3d = recon_dense(param, roi_box, size)
+                R, offset, alpha_shp, alpha_exp = _parse_param(param)
+                pts3d = R @ (self.bfm.u + self.bfm.w_shp @ alpha_shp + self.bfm.w_exp @ alpha_exp). \
+                    reshape(3, -1, order='F') + offset
+                pts3d = similar_transform(pts3d, roi_box, size)
+                # pts3d = recon_dense(param, roi_box, size)
             else:
-                pts3d = recon_sparse(param, roi_box, size)  # 68 pts
+                R, offset, alpha_shp, alpha_exp = _parse_param(param)
+                pts3d = R @ (self.bfm.u_base + self.bfm.w_shp_base @ alpha_shp + self.bfm.w_exp_base @ alpha_exp). \
+                    reshape(3, -1, order='F') + offset
+                pts3d = similar_transform(pts3d, roi_box, size)
+                # pts3d = recon_sparse(param, roi_box, size)  # 68 pts
 
             ver_lst.append(pts3d)
 

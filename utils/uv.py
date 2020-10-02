@@ -14,7 +14,7 @@ import scipy.io as sio
 from Sim3DR import rasterize
 from utils.functions import plot_image
 from utils.io import _load
-from utils.tddfa_util import _to_ctype, tri
+from utils.tddfa_util import _to_ctype
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 
@@ -34,7 +34,7 @@ def process_uv(uv_coords, uv_h=256, uv_w=256):
 
 
 g_uv_coords = load_uv_coords(make_abs_path('../configs/BFM_UV.mat'))
-indices = _load(make_abs_path('../configs/indices.npy'))
+indices = _load(make_abs_path('../configs/indices.npy'))  # todo: handle bfm_slim
 g_uv_coords = g_uv_coords[indices, :]
 
 
@@ -76,7 +76,7 @@ def bilinear_interpolate(img, x, y):
     return wa[..., np.newaxis] * i_a + wb[..., np.newaxis] * i_b + wc[..., np.newaxis] * i_c + wd[..., np.newaxis] * i_d
 
 
-def uv_tex(img, ver_lst, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
+def uv_tex(img, ver_lst, tri, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
     uv_coords = process_uv(g_uv_coords, uv_h=uv_h, uv_w=uv_w)
 
     res_lst = []
@@ -98,4 +98,3 @@ def uv_tex(img, ver_lst, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
         plot_image(res)
 
     return res
-

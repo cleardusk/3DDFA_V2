@@ -69,7 +69,7 @@ def main(args):
         if args.opt == '2d_sparse':
             res = cv_draw_landmark(frame_bgr, ver)
         elif args.opt == '3d':
-            res = render(frame_bgr, [ver])
+            res = render(frame_bgr, [ver], tddfa.bfm.tri)
         else:
             raise ValueError(f'Unknown opt {args.opt}')
 

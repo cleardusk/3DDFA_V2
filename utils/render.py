@@ -10,7 +10,7 @@ import cv2
 
 from Sim3DR import RenderPipeline
 from utils.functions import plot_image
-from .tddfa_util import _to_ctype, tri
+from .tddfa_util import _to_ctype
 
 cfg = {
     'intensity_ambient': 0.3,
@@ -26,7 +26,7 @@ cfg = {
 render_app = RenderPipeline(**cfg)
 
 
-def render(img, ver_lst, alpha=0.6, show_flag=False, wfp=None):
+def render(img, ver_lst, tri, alpha=0.6, show_flag=False, wfp=None):
     overlap = img.copy()
     for ver_ in ver_lst:
         ver = _to_ctype(ver_.T)  # transpose

@@ -13,7 +13,7 @@ import os.path as osp
 from Sim3DR import rasterize
 from utils.functions import plot_image
 from utils.io import _load, _dump
-from utils.tddfa_util import _to_ctype, tri
+from utils.tddfa_util import _to_ctype
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 
@@ -31,7 +31,7 @@ def calc_ncc_code():
     _dump('../configs/ncc_code.npy', u)
 
 
-def pncc(img, ver_lst, show_flag=False, wfp=None, with_bg_flag=True):
+def pncc(img, ver_lst, tri, show_flag=False, wfp=None, with_bg_flag=True):
     ncc_code = _load(make_abs_path('../configs/ncc_code.npy'))
 
     if with_bg_flag:

@@ -3,6 +3,7 @@
 __author__ = 'cleardusk'
 
 import os
+
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 os.environ["OMP_NUM_THREADS"] = "4"
 
@@ -12,12 +13,13 @@ import numpy as np
 import cv2
 import onnxruntime
 
+from bfm import BFMModel
 from utils.onnx import convert_to_onnx
 from utils.io import _load
 from utils.functions import (
     crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,
 )
-from utils.tddfa_util import recon_dense, recon_sparse
+from utils.tddfa_util import _parse_param, similar_transform
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 
@@ -27,6 +29,9 @@ class TDDFA_ONNX(object):
 
     def __init__(self, **kvs):
         # torch.set_grad_enabled(False)
+
+        # load BFM
+        self.bfm = BFMModel(kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')))
 
         # config
         self.gpu_mode = kvs.get('gpu_mode', False)
@@ -95,17 +100,16 @@ class TDDFA_ONNX(object):
 
         ver_lst = []
         for param, roi_box in zip(param_lst, roi_box_lst):
-            if kvs.get('timer_flag', False):
-                end = time.time()
-
             if dense_flag:
-                pts3d = recon_dense(param, roi_box, size)  # 38365 points
+                R, offset, alpha_shp, alpha_exp = _parse_param(param)
+                pts3d = R @ (self.bfm.u + self.bfm.w_shp @ alpha_shp + self.bfm.w_exp @ alpha_exp). \
+                    reshape(3, -1, order='F') + offset
+                pts3d = similar_transform(pts3d, roi_box, size)
             else:
-                pts3d = recon_sparse(param, roi_box, size)  # 68 points
-
-            if kvs.get('timer_flag', False):
-                elapse = f'Reconstruction time: {(time.time() - end) * 1000:.1f}ms'
-                print(elapse)
+                R, offset, alpha_shp, alpha_exp = _parse_param(param)
+                pts3d = R @ (self.bfm.u_base + self.bfm.w_shp_base @ alpha_shp + self.bfm.w_exp_base @ alpha_exp). \
+                    reshape(3, -1, order='F') + offset
+                pts3d = similar_transform(pts3d, roi_box, size)
 
             ver_lst.append(pts3d)
 
