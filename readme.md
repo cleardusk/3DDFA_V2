@@ -23,7 +23,7 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 
 This work extends [3DDFA](https://github.com/cleardusk/3DDFA), named **3DDFA_V2**, titled [Towards Fast, Accurate and Stable 3D Dense Face Alignment](https://guojianzhu.com/assets/pdfs/3162.pdf), accepted by [ECCV 2020](https://eccv2020.eu/). The supplementary material is [here](https://guojianzhu.com/assets/pdfs/3162-supp.pdf). The [gif](./docs/images/webcam.gif) above shows a webcam demo of the tracking result, in the scenario of my lab. This repo is the official implementation of 3DDFA_V2.
 
-Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves better performance and stability. Besides, 3DDFA_V2 incorporates the fast face detector [FaceBoxes](https://github.com/zisianw/FaceBoxes.PyTorch) instead of Dlib. A simple 3D render written by c++ and cython is also included. This repo supports the onnxruntime, and the inference latency of default backbone is about **1.35ms/image** with a single image as input. If you are interested in this repo, just try it on this **[google colab](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv)**! Welcome for valuable issues and PRs 😄
+Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves better performance and stability. Besides, 3DDFA_V2 incorporates the fast face detector [FaceBoxes](https://github.com/zisianw/FaceBoxes.PyTorch) instead of Dlib. A simple 3D render written by c++ and cython is also included. This repo supports the onnxruntime, and the inference latency of default backbone is about **1.35ms/image on CPU** with a single image as input. If you are interested in this repo, just try it on this **[google colab](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv)**! Welcome for valuable issues and PRs 😄
 
 <!-- Currently, the pre-trained model, inference code and some utilities are released.  -->
 
@@ -142,7 +142,7 @@ Running on a video will give:
 
 ### Configs
 
-The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time in the paper is evaluated using TensorFlow.
+The default backbone is MobileNet_V1 with input size 120x120 and the default pre-trained weight is `weights/mb1_120x120.pth`, shown in [configs/mb1_120x120.yml](configs/mb1_120x120.yml). This repo provides another config in [configs/mb05_120x120.yml](configs/mb05_120x120.yml), with the widen factor 0.5, being smaller and faster. You can specify the config by `-c` or `--config` option. The released models are shown in the below table. Note that the inference time on CPU in the paper is evaluated using TensorFlow.
 
 | Model | Input | #Params | #Macs | Inference (TF) |
 | :-: | :-: | :-: | :-: | :-: |
@@ -150,7 +150,7 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 | MobileNet x0.5 | 120x120 | 0.85M | 49.5M | ~2.9ms |
 
 
-**Surprisingly**, the latency of [onnxruntime](https://github.com/microsoft/onnxruntime) is much smaller. The inference time with different threads is shown below. The results are tested on my MBP (i5-8259U CPU @ 2.30GHz on 13-inch MacBook Pro), with the `1.5.1` version of onnxruntime. The thread number is set by `os.environ["OMP_NUM_THREADS"]`, see [speed_cpu.py](./speed_cpu.py) for more details.
+**Surprisingly**, the latency of [onnxruntime](https://github.com/microsoft/onnxruntime) is much smaller. The inference time on CPU with different threads is shown below. The results are tested on my MBP (i5-8259U CPU @ 2.30GHz on 13-inch MacBook Pro), with the `1.5.1` version of onnxruntime. The thread number is set by `os.environ["OMP_NUM_THREADS"]`, see [speed_cpu.py](./speed_cpu.py) for more details.
 
 | Model | THREAD=1 | THREAD=2 | THREAD=4 |
 | :-: | :-: | :-: | :-: |
