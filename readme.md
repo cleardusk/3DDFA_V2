@@ -150,9 +150,9 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 | MobileNet x0.5 | 120x120 | 0.85M | 49.5M | ~2.9ms |
 
 
-**Surprisingly**, the latency of [onnxruntime](https://github.com/microsoft/onnxruntime) is much smaller, shown below. The results are tested on my MBP (i5-8259U CPU @ 2.30GHz on 13-inch MacBook Pro), with the `1.5.1` version of onnxruntime. The thread number is set by `os.environ["OMP_NUM_THREADS"]`, see [speed_cpu.py](./speed_cpu.py) for more details.
+**Surprisingly**, the latency of [onnxruntime](https://github.com/microsoft/onnxruntime) is much smaller. The inference time with different threads is shown below. The results are tested on my MBP (i5-8259U CPU @ 2.30GHz on 13-inch MacBook Pro), with the `1.5.1` version of onnxruntime. The thread number is set by `os.environ["OMP_NUM_THREADS"]`, see [speed_cpu.py](./speed_cpu.py) for more details.
 
-| Model \ OMP_NUM_THREADS = | 1 | 2 | 4 |
+| Model | THREAD=1 | THREAD=2 | THREAD=4 |
 | :-: | :-: | :-: | :-: |
 | MobileNet  | 4.4ms  | 2.25ms | 1.35ms |
 | MobileNet x0.5 | 1.37ms | 0.7ms | 0.5ms |
