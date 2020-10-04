@@ -161,8 +161,8 @@ void _get_normal(float *ver_normal, float *vertices, int *triangles, int nver, i
 
     // get tri_normal
 //    float tri_normal[3 * ntri];
-    float* tri_normal;
-    tri_normal = new float [3 * ntri];
+    float *tri_normal;
+    tri_normal = new float[3 * ntri];
     for (int i = 0; i < ntri; i++) {
         tri_p0_ind = triangles[3 * i];
         tri_p1_ind = triangles[3 * i + 1];
@@ -205,7 +205,7 @@ void _get_normal(float *ver_normal, float *vertices, int *triangles, int nver, i
         nz = ver_normal[3 * i + 2];
 
         det = sqrt(nx * nx + ny * ny + nz * nz);
-//        if (det <= 0) det = 1e-6;
+        if (det <= 0) det = 1e-6;
         ver_normal[3 * i] = nx / det;
         ver_normal[3 * i + 1] = ny / det;
         ver_normal[3 * i + 2] = nz / det;
@@ -242,11 +242,11 @@ void _rasterize(
         p2.y = vertices[3 * tri_p2_ind + 1];
         p2_depth = vertices[3 * tri_p2_ind + 2];
 
-        x_min = max((int) floor(min(p0.x, min(p1.x, p2.x))), 0);
-        x_max = min((int) ceil(max(p0.x, max(p1.x, p2.x))), w - 1);
+        x_min = max((int) ceil(min(p0.x, min(p1.x, p2.x))), 0);
+        x_max = min((int) floor(max(p0.x, max(p1.x, p2.x))), w - 1);
 
-        y_min = max((int) floor(min(p0.y, min(p1.y, p2.y))), 0);
-        y_max = min((int) ceil(max(p0.y, max(p1.y, p2.y))), h - 1);
+        y_min = max((int) ceil(min(p0.y, min(p1.y, p2.y))), 0);
+        y_max = min((int) floor(max(p0.y, max(p1.y, p2.y))), h - 1);
 
         if (x_max < x_min || y_max < y_min) {
             continue;
@@ -254,9 +254,14 @@ void _rasterize(
 
         for (y = y_min; y <= y_max; y++) {
             for (x = x_min; x <= x_max; x++) {
-                p.x = x;
-                p.y = y;
-                if (is_point_in_tri(p, p0, p1, p2)) {
+                p.x = float(x);
+                p.y = float(y);
+
+                // call get_point_weight function once
+                get_point_weight(weight, p, p0, p1, p2);
+
+                // and judge is_point_in_tri by below line of code
+                if (weight[2] >= 0 && weight[1] >= 0 && weight[0] > 0) {
                     get_point_weight(weight, p, p0, p1, p2);
                     p_depth = weight[0] * p0_depth + weight[1] * p1_depth + weight[2] * p2_depth;
 

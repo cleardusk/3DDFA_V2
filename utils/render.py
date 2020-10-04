@@ -7,6 +7,7 @@ import sys
 sys.path.append('..')
 
 import cv2
+import numpy as np
 
 from Sim3DR import RenderPipeline
 from utils.functions import plot_image
@@ -26,13 +27,20 @@ cfg = {
 render_app = RenderPipeline(**cfg)
 
 
-def render(img, ver_lst, tri, alpha=0.6, show_flag=False, wfp=None):
-    overlap = img.copy()
+def render(img, ver_lst, tri, alpha=0.6, show_flag=False, wfp=None, with_bg_flag=True):
+    if with_bg_flag:
+        overlap = img.copy()
+    else:
+        overlap = np.zeros_like(img)
+
     for ver_ in ver_lst:
         ver = _to_ctype(ver_.T)  # transpose
         overlap = render_app(ver, tri, overlap)
 
-    res = cv2.addWeighted(img, 1 - alpha, overlap, alpha, 0)
+    if with_bg_flag:
+        res = cv2.addWeighted(img, 1 - alpha, overlap, alpha, 0)
+    else:
+        res = overlap
 
     if wfp is not None:
         cv2.imwrite(wfp, res)
