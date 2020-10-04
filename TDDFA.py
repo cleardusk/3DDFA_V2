@@ -31,7 +31,11 @@ class TDDFA(object):
         torch.set_grad_enabled(False)
 
         # load BFM
-        self.bfm = BFMModel(kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')))
+        self.bfm = BFMModel(
+            bfm_fp=kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')),
+            shape_dim=kvs.get('shape_dim', 40),
+            exp_dim=kvs.get('exp_dim', 10)
+        )
 
         # config
         self.gpu_mode = kvs.get('gpu_mode', False)
@@ -42,7 +46,7 @@ class TDDFA(object):
             'param_mean_std_fp', make_abs_path(f'configs/param_mean_std_62d_{self.size}x{self.size}.pkl')
         )
 
-        # load model, 62 = 12(pose) + 40(shape) +10(expression)
+        # load model, default output is dimension with length 62 = 12(pose) + 40(shape) +10(expression)
         model = getattr(models, kvs.get('arch'))(
             num_classes=kvs.get('num_params', 62),
             widen_factor=kvs.get('widen_factor', 1),
@@ -127,13 +131,11 @@ class TDDFA(object):
                 pts3d = R @ (self.bfm.u + self.bfm.w_shp @ alpha_shp + self.bfm.w_exp @ alpha_exp). \
                     reshape(3, -1, order='F') + offset
                 pts3d = similar_transform(pts3d, roi_box, size)
-                # pts3d = recon_dense(param, roi_box, size)
             else:
                 R, offset, alpha_shp, alpha_exp = _parse_param(param)
                 pts3d = R @ (self.bfm.u_base + self.bfm.w_shp_base @ alpha_shp + self.bfm.w_exp_base @ alpha_exp). \
                     reshape(3, -1, order='F') + offset
                 pts3d = similar_transform(pts3d, roi_box, size)
-                # pts3d = recon_sparse(param, roi_box, size)  # 68 pts
 
             ver_lst.append(pts3d)
 

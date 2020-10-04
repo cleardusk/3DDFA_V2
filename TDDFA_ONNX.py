@@ -31,7 +31,11 @@ class TDDFA_ONNX(object):
         # torch.set_grad_enabled(False)
 
         # load BFM
-        self.bfm = BFMModel(kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')))
+        self.bfm = BFMModel(
+            bfm_fp=kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')),
+            shape_dim=kvs.get('shape_dim', 40),
+            exp_dim=kvs.get('exp_dim', 10)
+        )
 
         # config
         self.gpu_mode = kvs.get('gpu_mode', False)

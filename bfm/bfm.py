@@ -20,11 +20,11 @@ def _to_ctype(arr):
 
 
 class BFMModel(object):
-    def __init__(self, bfm_fp):
+    def __init__(self, bfm_fp, shape_dim=40, exp_dim=10):
         bfm = _load(bfm_fp)
         self.u = bfm.get('u').astype(np.float32)  # fix bug
-        self.w_shp = bfm.get('w_shp').astype(np.float32)
-        self.w_exp = bfm.get('w_exp').astype(np.float32)
+        self.w_shp = bfm.get('w_shp').astype(np.float32)[..., :shape_dim]
+        self.w_exp = bfm.get('w_exp').astype(np.float32)[..., :exp_dim]
         if osp.split(bfm_fp)[-1] == 'bfm_noneck_v3.pkl':
             self.tri = _load(make_abs_path('../configs/tri.pkl'))  # this tri/face is re-built for bfm_noneck_v3
         else:
