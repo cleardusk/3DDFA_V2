@@ -25,4 +25,4 @@ pr.*
 render_3dface.ipynb
 bfm_onnx.py
 test_onnx.py
-test_speed_cpu.py
+benchmark.py

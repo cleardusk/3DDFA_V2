@@ -1,5 +1,10 @@
 # coding: utf-8
 
+import os
+
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ["OMP_NUM_THREADS"] = "4"
+
 import os.path as osp
 
 import torch
@@ -10,9 +15,10 @@ from .utils.prior_box import PriorBox
 from .utils.nms_wrapper import nms
 from .utils.box_utils import decode
 from .utils.timer import Timer
-from .utils.functions import check_keys, remove_prefix, load_model
 from .utils.config import cfg
-from .models.faceboxes import FaceBoxesNet
+from .onnx import convert_to_onnx
+
+import onnxruntime
 
 # some global configs
 confidence_threshold = 0.05
@@ -26,7 +32,7 @@ scale_flag = True
 HEIGHT, WIDTH = 720, 1080
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
-pretrained_path = make_abs_path('weights/FaceBoxesProd.pth')
+onnx_path = make_abs_path('weights/FaceBoxesProd.onnx')
 
 
 def viz_bbox(img, dets, wfp='out.jpg'):
@@ -44,14 +50,11 @@ def viz_bbox(img, dets, wfp='out.jpg'):
     print(f'Viz bbox to {wfp}')
 
 
-class FaceBoxes:
+class FaceBoxes_ONNX(object):
     def __init__(self, timer_flag=False):
-        torch.set_grad_enabled(False)
-
-        net = FaceBoxesNet(phase='test', size=None, num_classes=2)  # initialize detector
-        self.net = load_model(net, pretrained_path=pretrained_path, load_to_cpu=True)
-        self.net.eval()
-        # print('Finished loading model!')
+        if not osp.exists(onnx_path):
+            convert_to_onnx(onnx_path)
+        self.session = onnxruntime.InferenceSession(onnx_path, None)
 
         self.timer_flag = timer_flag
 
@@ -84,14 +87,21 @@ class FaceBoxes:
         _t = {'forward_pass': Timer(), 'misc': Timer()}
         im_height, im_width, _ = img.shape
         scale_bbox = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
+
         img -= (104, 117, 123)
         img = img.transpose(2, 0, 1)
-        img = torch.from_numpy(img).unsqueeze(0)
+        # img = torch.from_numpy(img).unsqueeze(0)
+        img = img[np.newaxis, ...]
 
         _t['forward_pass'].tic()
-        loc, conf = self.net(img)  # forward pass
+        # loc, conf = self.net(img)  # forward pass
+        out = self.session.run(None, {'input': img})
+        loc, conf = out[0], out[1]
+        # for compatibility, may need to optimize
+        loc = torch.from_numpy(loc)
         _t['forward_pass'].toc()
         _t['misc'].tic()
+
         priorbox = PriorBox(image_size=(im_height, im_width))
         priors = priorbox.forward()
         prior_data = priors.data
@@ -102,7 +112,8 @@ class FaceBoxes:
             boxes = boxes * scale_bbox / resize
 
         boxes = boxes.cpu().numpy()
-        scores = conf.squeeze(0).data.cpu().numpy()[:, 1]
+        scores = conf[0][:, 1]
+        # scores = conf.squeeze(0).data.cpu().numpy()[:, 1]
 
         # ignore low scores
         inds = np.where(scores > confidence_threshold)[0]
@@ -139,7 +150,7 @@ class FaceBoxes:
 
 
 def main():
-    face_boxes = FaceBoxes(timer_flag=True)
+    face_boxes = FaceBoxes_ONNX(timer_flag=True)
 
     fn = 'trump_hillary.jpg'
     img_fp = f'../examples/inputs/{fn}'

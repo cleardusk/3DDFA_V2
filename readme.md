@@ -14,7 +14,8 @@ By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn
 
 
 **\[Updates\]**
- - `2020.10.2`: **Add onnxruntime support to greatly reduce the inference latency**, just append the `--onnx` action when running `demo.py`, see [TDDFA_ONNX.py](./TDDFA_ONNX.py) for details.
+ - `2020.10.6`: Add onnxruntime support for FaceBoxes to reduce the face detection latency, just append the `--onnx` action to activate it, see [FaceBoxes_ONNX.py](FaceBoxes/FaceBoxes_ONNX.py) for details.
+ - `2020.10.2`: **Add onnxruntime support to greatly reduce the 3dmm parameters inference latency**, just append the `--onnx` action when running `demo.py`, see [TDDFA_ONNX.py](./TDDFA_ONNX.py) for details.
  - `2020.9.20`: Add features including pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
  - `2020.9.19`: Add PNCC (Projected Normalized Coordinate Code), uv texture mapping features, see `pncc`, `uv_tex` options in [demo.py](./demo.py).
 

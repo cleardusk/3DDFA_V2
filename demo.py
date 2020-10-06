@@ -20,18 +20,19 @@ from utils.tddfa_util import str2bool
 
 
 def main(args):
-    # Init TDDFA or TDDFA_ONNX
     cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
 
+    # Init FaceBoxes and TDDFA, recommend using onnx flag
     if args.onnx:
+        from FaceBoxes.FaceBoxes_ONNX import FaceBoxes_ONNX
         from TDDFA_ONNX import TDDFA_ONNX
+
+        face_boxes = FaceBoxes_ONNX()
         tddfa = TDDFA_ONNX(**cfg)
     else:
         gpu_mode = args.mode == 'gpu'
         tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
-
-    # Init FaceBoxes
-    face_boxes = FaceBoxes()
+        face_boxes = FaceBoxes()
 
     # Given a still image path and load to BGR channel
     img = cv2.imread(args.img_fp)
@@ -39,10 +40,10 @@ def main(args):
     # Detect faces, get 3DMM params and roi boxes
     boxes = face_boxes(img)
     n = len(boxes)
-    print(f'Detect {n} faces')
     if n == 0:
         print(f'No face detected, exit')
         sys.exit(-1)
+    print(f'Detect {n} faces')
 
     param_lst, roi_box_lst = tddfa(img, boxes)
 

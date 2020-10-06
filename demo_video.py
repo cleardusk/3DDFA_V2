@@ -14,17 +14,19 @@ from utils.functions import cv_draw_landmark, get_suffix
 
 
 def main(args):
-    # Init TDDFA or TDDFA_ONNX
     cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
+
+    # Init FaceBoxes and TDDFA, recommend using onnx flag
     if args.onnx:
+        from FaceBoxes.FaceBoxes_ONNX import FaceBoxes_ONNX
         from TDDFA_ONNX import TDDFA_ONNX
+
+        face_boxes = FaceBoxes_ONNX()
         tddfa = TDDFA_ONNX(**cfg)
     else:
         gpu_mode = args.mode == 'gpu'
         tddfa = TDDFA(gpu_mode=gpu_mode, **cfg)
-
-    # Initialize FaceBoxes
-    face_boxes = FaceBoxes()
+        face_boxes = FaceBoxes()
 
     # Given a video path
     fn = args.video_fp.split('/')[-1]
