@@ -15,6 +15,7 @@ from utils.functions import (
     crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,
 )
 from utils.tddfa_util import _parse_param, similar_transform
+from bfm_onnx import convert_to_onnx_bfm
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 
@@ -28,8 +29,15 @@ class TDDFA_ONNX(object):
         # load BFM
         self.bfm_onnx = kvs.get('bfm_onnx', True)
         if self.bfm_onnx:
-            print('here')
-            self.bfm_session = onnxruntime.InferenceSession('weights/bfm_decoder.onnx', None)
+            bfm_fp = kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl'))
+            bfm_onnx_fp = bfm_fp.replace('.pkl', '.onnx')
+            if not osp.exists(bfm_onnx_fp):
+                convert_to_onnx_bfm(
+                    bfm_onnx_fp,
+                    shape_dim=kvs.get('shape_dim', 40),
+                    exp_dim=kvs.get('exp_dim', 10)
+                )
+            self.bfm_session = onnxruntime.InferenceSession(bfm_onnx_fp, None)
 
         self.bfm = BFMModel(
             bfm_fp=kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')),
