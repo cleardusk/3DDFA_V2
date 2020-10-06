@@ -16,8 +16,7 @@ from FaceBoxes.utils.timer import Timer
 def main(args):
     _t = {
         'det': Timer(),
-        'reg': Timer(),
-        'recon': Timer()
+        'reg': Timer()
     }
 
     cfg = yaml.load(open(args.config), Loader=yaml.SafeLoader)
@@ -43,7 +42,6 @@ def main(args):
         print('Warmup by once')
         boxes = face_boxes(img)
         param_lst, roi_box_lst = tddfa(img, boxes)
-        ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=True)
 
     for _ in range(args.repeated):
         img = cv2.imread(args.img_fp)
@@ -56,19 +54,13 @@ def main(args):
         if n == 0:
             print(f'No face detected, exit')
             sys.exit(-1)
-        # print(f'Detect {n} faces')
 
         _t['reg'].tic()
         param_lst, roi_box_lst = tddfa(img, boxes)
         _t['reg'].toc()
 
-        _t['recon'].tic()
-        ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=True)
-        _t['recon'].toc()
-
     print(f"Detection: {_t['det'].average_time * 1000:.2f}ms, "
-          f"Regression: {_t['reg'].average_time * 1000:.2f}ms, "
-          f"Reconstruction: {_t['recon'].average_time * 1000:.2f}ms")
+          f"Regression: {_t['reg'].average_time * 1000:.2f}ms")
 
 
 if __name__ == '__main__':
