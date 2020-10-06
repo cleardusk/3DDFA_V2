@@ -29,6 +29,7 @@ def convert_to_onnx(onnx_path):
         dynamic_axes={
             'input': [0, 2, 3],
             'output': [0]
-        }
+        },
+        do_constant_folding=True
     )
     print(f'Convert {pretrained_path} to {onnx_path} done.')

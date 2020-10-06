@@ -26,6 +26,11 @@ class TDDFA_ONNX(object):
         # torch.set_grad_enabled(False)
 
         # load BFM
+        self.bfm_onnx = kvs.get('bfm_onnx', True)
+        if self.bfm_onnx:
+            print('here')
+            self.bfm_session = onnxruntime.InferenceSession('weights/bfm_decoder.onnx', None)
+
         self.bfm = BFMModel(
             bfm_fp=kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')),
             shape_dim=kvs.get('shape_dim', 40),
@@ -99,16 +104,20 @@ class TDDFA_ONNX(object):
 
         ver_lst = []
         for param, roi_box in zip(param_lst, roi_box_lst):
-            if dense_flag:
-                R, offset, alpha_shp, alpha_exp = _parse_param(param)
-                pts3d = R @ (self.bfm.u + self.bfm.w_shp @ alpha_shp + self.bfm.w_exp @ alpha_exp). \
-                    reshape(3, -1, order='F') + offset
+            if self.bfm_onnx:
+                pts3d = self.bfm_session.run(None, {'input': param})[0]
                 pts3d = similar_transform(pts3d, roi_box, size)
             else:
-                R, offset, alpha_shp, alpha_exp = _parse_param(param)
-                pts3d = R @ (self.bfm.u_base + self.bfm.w_shp_base @ alpha_shp + self.bfm.w_exp_base @ alpha_exp). \
-                    reshape(3, -1, order='F') + offset
-                pts3d = similar_transform(pts3d, roi_box, size)
+                if dense_flag:
+                    R, offset, alpha_shp, alpha_exp = _parse_param(param)
+                    pts3d = R @ (self.bfm.u + self.bfm.w_shp @ alpha_shp + self.bfm.w_exp @ alpha_exp). \
+                        reshape(3, -1, order='F') + offset
+                    pts3d = similar_transform(pts3d, roi_box, size)
+                else:
+                    R, offset, alpha_shp, alpha_exp = _parse_param(param)
+                    pts3d = R @ (self.bfm.u_base + self.bfm.w_shp_base @ alpha_shp + self.bfm.w_exp_base @ alpha_exp). \
+                        reshape(3, -1, order='F') + offset
+                    pts3d = similar_transform(pts3d, roi_box, size)
 
             ver_lst.append(pts3d)
 
