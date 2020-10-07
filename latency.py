@@ -24,6 +24,10 @@ def main(args):
 
     # Init FaceBoxes and TDDFA
     if args.onnx:
+        import os
+        os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+        os.environ['OMP_NUM_THREADS'] = '4'
+
         from FaceBoxes.FaceBoxes_ONNX import FaceBoxes_ONNX
         from TDDFA_ONNX import TDDFA_ONNX
 
@@ -79,7 +83,6 @@ if __name__ == '__main__':
     parser.add_argument('--warmup', type=str2bool, default='true')
     parser.add_argument('--dense_flag', type=str2bool, default='true')
     parser.add_argument('--repeated', type=int, default=32)
-
 
     args = parser.parse_args()
     main(args)

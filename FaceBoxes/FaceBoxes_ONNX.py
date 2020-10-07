@@ -1,10 +1,5 @@
 # coding: utf-8
 
-import os
-
-os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
-os.environ["OMP_NUM_THREADS"] = "4"
-
 import os.path as osp
 
 import torch

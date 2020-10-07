@@ -164,6 +164,8 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 
 The `onnx` option greatly reduces the overall **CPU** latency, but face detection still takes up most of the latency time, e.g., 15ms for a 720p image. 3DMM parameters regression takes about 1~2ms for one face, and the dense reconstruction (more than 30,000 points, i.e. 38,365) is about 1ms for one face. Tracking applications may benefit from the fast 3DMM regression speed, since detection is not needed for every frame. The latency is tested using my 13-inch MacBook Pro (i5-8259U CPU @ 2.30GHz).
 
+The default `OMP_NUM_THREADS` is set 4, you can specify it by setting `os.environ['OMP_NUM_THREADS'] = '$NUM'` or inserting `export OMP_NUM_THREADS=$NUM` before running the python script.
+
 <p align="center">
   <img src="docs/images/latency.gif" alt="demo" width="640px">
 </p>
