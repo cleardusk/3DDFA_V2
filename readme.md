@@ -15,7 +15,7 @@ The code repo is owned and maintained by **[Jianzhu Guo](https://guojianzhu.com)
 
 
 **\[Updates\]**
- - `2020.10.7`: Add the latency evaluation of the full pipeline in [latency.py](./latency.py), just run by `python3 latency.py --onnx`, see [Latency Evaluation](#Latency\ evaluation) for details.
+ - `2020.10.7`: Add the latency evaluation of the full pipeline in [latency.py](./latency.py), just run by `python3 latency.py --onnx`, see [Latency Evaluation](#Latency) for details.
  - `2020.10.6`: Add onnxruntime support for FaceBoxes to reduce the face detection latency, just append the `--onnx` action to activate it, see [FaceBoxes_ONNX.py](FaceBoxes/FaceBoxes_ONNX.py) for details.
  - `2020.10.2`: **Add onnxruntime support to greatly reduce the 3dmm parameters inference latency**, just append the `--onnx` action when running `demo.py`, see [TDDFA_ONNX.py](./TDDFA_ONNX.py) for details.
  - `2020.9.20`: Add features including pose estimation and serializations to .ply and .obj, see `pose`, `ply`, `obj` options in [demo.py](./demo.py).
@@ -160,7 +160,7 @@ The default backbone is MobileNet_V1 with input size 120x120 and the default pre
 | MobileNet  | 4.4ms  | 2.25ms | 1.35ms |
 | MobileNet x0.5 | 1.37ms | 0.7ms | 0.5ms |
 
-### Latency Evaluation
+### Latency
 
 The `onnx` option greatly reduces the overall **CPU** latency, but face detection still takes up most of the latency time, e.g., 15ms for a 720p image. 3DMM parameters regression takes about 1~2ms for one face, and the dense reconstruction (more than 30,000 points, i.e. 38,365) is about 1ms for one face. Tracking applications may benefit from the fast 3DMM regression speed, since detection is not needed for every frame. The latency is tested using my 13-inch MacBook Pro (i5-8259U CPU @ 2.30GHz).
 
