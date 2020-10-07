@@ -43,7 +43,7 @@ def main(args):
         print('Warmup by once')
         boxes = face_boxes(img)
         param_lst, roi_box_lst = tddfa(img, boxes)
-        ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=True)
+        ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=args.dense_flag)
 
     for _ in range(args.repeated):
         img = cv2.imread(args.img_fp)
@@ -62,12 +62,13 @@ def main(args):
         _t['reg'].toc()
 
         _t['recon'].tic()
-        ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=True)
+        ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=args.dense_flag)
         _t['recon'].toc()
 
+    mode = 'Dense' if args.dense_flag else 'Sparse'
     print(f"Face detection: {_t['det'].average_time * 1000:.2f}ms, "
           f"3DMM regression: {_t['reg'].average_time * 1000:.2f}ms, "
-          f"Dense reconstruction: {_t['recon'].average_time * 1000:.2f}ms")
+          f"{mode} reconstruction: {_t['recon'].average_time * 1000:.2f}ms")
 
 
 if __name__ == '__main__':
@@ -76,7 +77,9 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--img_fp', type=str, default='examples/inputs/JianzhuGuo.jpg')
     parser.add_argument('--onnx', action='store_true', default=False)
     parser.add_argument('--warmup', type=str2bool, default='true')
+    parser.add_argument('--dense_flag', type=str2bool, default='true')
     parser.add_argument('--repeated', type=int, default=32)
+
 
     args = parser.parse_args()
     main(args)
