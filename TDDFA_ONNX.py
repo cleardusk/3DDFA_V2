@@ -3,19 +3,18 @@
 __author__ = 'cleardusk'
 
 import os.path as osp
-import time
 import numpy as np
 import cv2
 import onnxruntime
 
-from bfm import BFMModel
 from utils.onnx import convert_to_onnx
 from utils.io import _load
 from utils.functions import (
     crop_img, parse_roi_box_from_bbox, parse_roi_box_from_landmark,
 )
 from utils.tddfa_util import _parse_param, similar_transform
-from bfm_onnx import convert_to_onnx_bfm
+from bfm.bfm import BFMModel
+from bfm.bfm_onnx import convert_bfm_to_onnx
 
 make_abs_path = lambda fn: osp.join(osp.dirname(osp.realpath(__file__)), fn)
 
@@ -26,24 +25,21 @@ class TDDFA_ONNX(object):
     def __init__(self, **kvs):
         # torch.set_grad_enabled(False)
 
-        # load BFM
-        self.bfm_onnx = kvs.get('bfm_onnx', True)
-        if self.bfm_onnx:
-            bfm_fp = kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl'))
-            bfm_onnx_fp = bfm_fp.replace('.pkl', '.onnx')
-            if not osp.exists(bfm_onnx_fp):
-                convert_to_onnx_bfm(
-                    bfm_onnx_fp,
-                    shape_dim=kvs.get('shape_dim', 40),
-                    exp_dim=kvs.get('exp_dim', 10)
-                )
-            self.bfm_session = onnxruntime.InferenceSession(bfm_onnx_fp, None)
+        # load onnx version of BFM
+        bfm_fp = kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl'))
+        bfm_onnx_fp = bfm_fp.replace('.pkl', '.onnx')
+        if not osp.exists(bfm_onnx_fp):
+            convert_bfm_to_onnx(
+                bfm_onnx_fp,
+                shape_dim=kvs.get('shape_dim', 40),
+                exp_dim=kvs.get('exp_dim', 10)
+            )
+        self.bfm_session = onnxruntime.InferenceSession(bfm_onnx_fp, None)
 
-        self.bfm = BFMModel(
-            bfm_fp=kvs.get('bfm_fp', make_abs_path('configs/bfm_noneck_v3.pkl')),
-            shape_dim=kvs.get('shape_dim', 40),
-            exp_dim=kvs.get('exp_dim', 10)
-        )
+        # load for optimization
+        bfm = BFMModel(bfm_fp)
+        self.tri = bfm.tri
+        self.u_base, self.w_shp_base, self.w_exp_base = bfm.u_base, bfm.w_shp_base, bfm.w_exp_base
 
         # config
         self.gpu_mode = kvs.get('gpu_mode', False)
@@ -92,14 +88,7 @@ class TDDFA_ONNX(object):
 
             inp_dct = {'input': img}
 
-            if kvs.get('timer_flag', False):
-                end = time.time()
-                param = self.session.run(None, inp_dct)[0]
-                elapse = f'Inference time: {(time.time() - end) * 1000:.1f}ms'
-                print(elapse)
-            else:
-                param = self.session.run(None, inp_dct)[0]
-
+            param = self.session.run(None, inp_dct)[0]
             param = param.flatten().astype(np.float32)
             param = param * self.param_std + self.param_mean  # re-scale
             param_lst.append(param)
@@ -112,20 +101,17 @@ class TDDFA_ONNX(object):
 
         ver_lst = []
         for param, roi_box in zip(param_lst, roi_box_lst):
-            if self.bfm_onnx:
-                pts3d = self.bfm_session.run(None, {'input': param})[0]
+            R, offset, alpha_shp, alpha_exp = _parse_param(param)
+            if dense_flag:
+                inp_dct = {
+                    'R': R, 'offset': offset, 'alpha_shp': alpha_shp, 'alpha_exp': alpha_exp
+                }
+                pts3d = self.bfm_session.run(None, inp_dct)[0]
                 pts3d = similar_transform(pts3d, roi_box, size)
             else:
-                if dense_flag:
-                    R, offset, alpha_shp, alpha_exp = _parse_param(param)
-                    pts3d = R @ (self.bfm.u + self.bfm.w_shp @ alpha_shp + self.bfm.w_exp @ alpha_exp). \
-                        reshape(3, -1, order='F') + offset
-                    pts3d = similar_transform(pts3d, roi_box, size)
-                else:
-                    R, offset, alpha_shp, alpha_exp = _parse_param(param)
-                    pts3d = R @ (self.bfm.u_base + self.bfm.w_shp_base @ alpha_shp + self.bfm.w_exp_base @ alpha_exp). \
-                        reshape(3, -1, order='F') + offset
-                    pts3d = similar_transform(pts3d, roi_box, size)
+                pts3d = R @ (self.u_base + self.w_shp_base @ alpha_shp + self.w_exp_base @ alpha_exp). \
+                    reshape(3, -1, order='F') + offset
+                pts3d = similar_transform(pts3d, roi_box, size)
 
             ver_lst.append(pts3d)
 

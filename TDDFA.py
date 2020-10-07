@@ -36,6 +36,7 @@ class TDDFA(object):
             shape_dim=kvs.get('shape_dim', 40),
             exp_dim=kvs.get('exp_dim', 10)
         )
+        self.tri = self.bfm.tri
 
         # config
         self.gpu_mode = kvs.get('gpu_mode', False)

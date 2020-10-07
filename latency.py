@@ -65,9 +65,9 @@ def main(args):
         ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=True)
         _t['recon'].toc()
 
-    print(f"Detection: {_t['det'].average_time * 1000:.2f}ms, "
-          f"Regression: {_t['reg'].average_time * 1000:.2f}ms, "
-          f"Reconstruction: {_t['recon'].average_time * 1000:.2f}ms")
+    print(f"Face detection: {_t['det'].average_time * 1000:.2f}ms, "
+          f"3DMM regression: {_t['reg'].average_time * 1000:.2f}ms, "
+          f"Dense reconstruction: {_t['recon'].average_time * 1000:.2f}ms")
 
 
 if __name__ == '__main__':

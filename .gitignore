@@ -23,6 +23,5 @@ configs/ncc_code_53215.npy
 pr.*
 *.docx
 render_3dface.ipynb
-bfm_onnx.py
 test_onnx.py
 benchmark.py
