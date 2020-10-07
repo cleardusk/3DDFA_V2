@@ -37,7 +37,7 @@ class TDDFA_ONNX(object):
         self.bfm_session = onnxruntime.InferenceSession(bfm_onnx_fp, None)
 
         # load for optimization
-        bfm = BFMModel(bfm_fp)
+        bfm = BFMModel(bfm_fp, shape_dim=kvs.get('shape_dim', 40), exp_dim=kvs.get('exp_dim', 10))
         self.tri = bfm.tri
         self.u_base, self.w_shp_base, self.w_exp_base = bfm.u_base, bfm.w_shp_base, bfm.w_exp_base
 

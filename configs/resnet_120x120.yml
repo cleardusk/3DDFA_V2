@@ -1,6 +1,6 @@
 # before using this config, go through readme.md to find the onnx links to download `resnet22.onnx`
 arch: resnet22
-checkpoint_fp: weights/resnet22.onnx
+checkpoint_fp: weights/resnet22.pth
 bfm_fp: configs/bfm_noneck_v3.pkl
 size: 120
 num_params: 62
