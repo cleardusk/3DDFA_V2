@@ -71,7 +71,7 @@ class BFMModel_ONNX(nn.Module):
 
 
 def convert_bfm_to_onnx(bfm_onnx_fp, shape_dim=40, exp_dim=10):
-    print(shape_dim, exp_dim)
+    # print(shape_dim, exp_dim)
     bfm_fp = bfm_onnx_fp.replace('.onnx', '.pkl')
     bfm_decoder = BFMModel_ONNX(bfm_fp=bfm_fp, shape_dim=shape_dim, exp_dim=exp_dim)
     bfm_decoder.eval()
