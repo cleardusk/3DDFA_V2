@@ -33,7 +33,7 @@ Compared to [3DDFA](https://github.com/cleardusk/3DDFA), 3DDFA_V2 achieves bette
 ## Getting started
 
 ### Requirements
-See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. Note that this repo uses Python3. The major dependencies are PyTorch, numpy, opencv-python and onnxruntime, etc.
+See [requirements.txt](./requirements.txt), tested on macOS and Linux platforms. The Windows users may refer to [FQA](#FQA) for building issues. Note that this repo uses Python3. The major dependencies are PyTorch, numpy, opencv-python and onnxruntime, etc. If you run the demos with `--onnx` flag to do acceleration, you may need to install `libomp` first, i.e., `brew install libomp` on macOS.
 
 ### Usage
 
@@ -98,6 +98,7 @@ Running on a video will give:
   <img src="docs/images/out.gif" alt="demo" width="512px">
 </p>
 
+More results or demos to see: [Hathaway](https://guojianzhu.com/assets/videos/hatheway_3ddfa_v2.mp4).
 
 <!-- Obviously, the eyes parts are not good. -->
 
