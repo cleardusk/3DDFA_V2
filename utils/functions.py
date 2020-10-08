@@ -156,14 +156,14 @@ def draw_landmarks(img, pts, style='fancy', wfp=None, show_flag=False, **kwargs)
         plt.show()
 
 
-def cv_draw_landmark(img_ori, pts, box=None, color=GREEN, size=2):
+def cv_draw_landmark(img_ori, pts, box=None, color=GREEN, size=1):
     img = img_ori.copy()
     n = pts.shape[1]
     if n <= 106:
         for i in range(n):
             cv2.circle(img, (int(round(pts[0, i])), int(round(pts[1, i]))), size, color, -1)
     else:
-        sep = 16
+        sep = 1
         for i in range(0, n, sep):
             cv2.circle(img, (int(round(pts[0, i])), int(round(pts[1, i]))), size, color, 1)
 
