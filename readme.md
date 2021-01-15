@@ -45,7 +45,7 @@ git clone https://github.com/cleardusk/3DDFA_V2.git
 cd 3DDFA_V2
 ```
 
-2. Build the cython version of NMS, and Sim3DR
+2. Build the cython version of NMS, Sim3DR, and the faster mesh render
 <!-- ```shell script
 cd FaceBoxes
 sh ./build_cpu_nms.sh
@@ -191,6 +191,12 @@ The default `OMP_NUM_THREADS` is set 4, you can specify it by setting `os.enviro
 
 * The FaceBoxes module is modified from [FaceBoxes.PyTorch](https://github.com/zisianw/FaceBoxes.PyTorch).
 * A list of previous works on 3D dense face alignment or reconstruction: [3DDFA](https://github.com/cleardusk/3DDFA), [face3d](https://github.com/YadiraF/face3d), [PRNet](https://github.com/YadiraF/PRNet).
+
+## Other implementations or applications
+
+* [Dense-Head-Pose-Estimation](https://github.com/1996scarlet/Dense-Head-Pose-Estimation): Tensorflow Lite framework for face mesh, head pose, landmarks, and more.
+* [HeadPoseEstimate](https://github.com/bubingy/HeadPoseEstimate): Head pose estimation system based on 3d facial landmarks.
+* [img2pose](https://github.com/vitoralbiero/img2pose): Borrow the renderer implementation of Sim3DR in this repo.
 
 ## Citation
 
