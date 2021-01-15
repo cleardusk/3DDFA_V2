@@ -15,6 +15,7 @@ The code repo is owned and maintained by **[Jianzhu Guo](https://guojianzhu.com)
 
 
 **\[Updates\]**
+ - `2021.1.15`: Borrow the implementation of [Dense-Head-Pose-Estimation](https://github.com/1996scarlet/Dense-Head-Pose-Estimation) for the faster mesh rendering (speedup about 3x, 15ms -> 4ms), see [utils/render_ctypes.py](./utils/render_ctypes.py) for details.
  - `2020.10.7`: Add the latency evaluation of the full pipeline in [latency.py](./latency.py), just run by `python3 latency.py --onnx`, see [Latency](#Latency) evaluation for details.
  - `2020.10.6`: Add onnxruntime support for FaceBoxes to reduce the face detection latency, just append the `--onnx` action to activate it, see [FaceBoxes_ONNX.py](FaceBoxes/FaceBoxes_ONNX.py) for details.
  - `2020.10.2`: **Add onnxruntime support to greatly reduce the 3dmm parameters inference latency**, just append the `--onnx` action when running `demo.py`, see [TDDFA_ONNX.py](./TDDFA_ONNX.py) for details.
@@ -53,6 +54,11 @@ cd ..
 cd Sim3DR
 sh ./build_sim3dr.sh
 cd ..
+
+# the faster mesh render
+cd utils/asset
+gcc -shared -Wall -O3 render.c -o render.so -fPIC
+cd ../..
 ```
 
 or simply build them by -->

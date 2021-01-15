@@ -12,6 +12,7 @@ from collections import deque
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
 from utils.render import render
+# from utils.render_ctypes import render
 from utils.functions import cv_draw_landmark, get_suffix
 
 
@@ -23,7 +24,7 @@ def main(args):
         import os
         os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
         os.environ['OMP_NUM_THREADS'] = '4'
-        
+
         from FaceBoxes.FaceBoxes_ONNX import FaceBoxes_ONNX
         from TDDFA_ONNX import TDDFA_ONNX
 

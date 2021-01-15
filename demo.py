@@ -9,7 +9,8 @@ import yaml
 
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
-from utils.render import render
+# from utils.render import render
+from utils.render_ctypes import render  # faster
 from utils.depth import depth
 from utils.pncc import pncc
 from utils.uv import uv_tex
