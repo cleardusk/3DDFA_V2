@@ -77,7 +77,7 @@ def bilinear_interpolate(img, x, y):
 
 
 def uv_tex(img, ver_lst, tri, uv_h=256, uv_w=256, uv_c=3, show_flag=False, wfp=None):
-    uv_coords = process_uv(g_uv_coords, uv_h=uv_h, uv_w=uv_w)
+    uv_coords = process_uv(g_uv_coords.copy(), uv_h=uv_h, uv_w=uv_w)
 
     res_lst = []
     for ver_ in ver_lst:
