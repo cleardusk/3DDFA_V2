@@ -104,7 +104,7 @@ Running on a video will give:
   <img src="docs/images/out.gif" alt="demo" width="512px">
 </p>
 
-More results or demos to see: [Hathaway](https://guojianzhu.com/assets/videos/hatheway_3ddfa_v2.mp4).
+More results or demos to see: [Hathaway](https://guojianzhu.com/assets/videos/hathaway_3ddfa_v2.mp4).
 
 <!-- Obviously, the eyes parts are not good. -->
 
@@ -217,4 +217,4 @@ If your work or research benefits from this repo, please cite two bibs below : )
     }
 
 ## Contact
-**Jianzhu Guo (郭建珠)** [[Homepage](http://guojianzhu.com), [Google Scholar](https://scholar.google.com/citations?user=W8_JzNcAAAAJ&hl=en&oi=ao)]:  **jianzhu.guo@nlpr.ia.ac.cn** or **guojianzhu1994@foxmail.com**.
+**Jianzhu Guo (郭建珠)** [[Homepage](https://guojianzhu.com), [Google Scholar](https://scholar.google.com/citations?user=W8_JzNcAAAAJ&hl=en&oi=ao)]: **guojianzhu1994@foxmail.com** or **guojianzhu1994@gmail.com** or **jianzhu.guo@nlpr.ia.ac.cn** (this email will be invalid soon).
