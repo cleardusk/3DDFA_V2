@@ -18,7 +18,7 @@ def depth(img, ver_lst, tri, show_flag=False, wfp=None, with_bg_flag=True):
     if with_bg_flag:
         overlap = img.copy()
     else:
-        overlap = np.zeros_like(img)
+        overlap = np.ascontiguousarray(np.zeros_like(img))
 
     for ver_ in ver_lst:
         ver = _to_ctype(ver_.T)  # transpose
