@@ -12,6 +12,11 @@ def run_cmd(command):
   
 
 run_cmd("sh ./build.sh")
+print(os.getcwd())
+os.chdir("/app")
+print(os.getcwd())
+
+
 
 import cv2
 import yaml
