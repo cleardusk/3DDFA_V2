@@ -1,6 +1,7 @@
 # before import, make sure FaceBoxes and Sim3DR are built successfully, e.g.,
 import sys
 from subprocess import call
+import os
 
 def run_cmd(command):
     try:
