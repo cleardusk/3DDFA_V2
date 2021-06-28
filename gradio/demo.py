@@ -11,12 +11,18 @@ def run_cmd(command):
         print("Process interrupted")
         sys.exit(1)
   
-
-run_cmd("sh ./build.sh")
 print(os.getcwd())
+os.chdir("/app/FaceBoxes/utils")
+print(os.getcwd())
+run_cmd("python3 build.py build_ext --inplace")
+os.chdir("/app/Sim3DR")
+print(os.getcwd())
+run_cmd("python3 setup.py build_ext --inplace")
+os.chdir("/app/utils/asset")
+print(os.getcwd())
+run_cmd("gcc -shared -Wall -O3 render.c -o render.so -fPIC")
 os.chdir("/app")
 print(os.getcwd())
-
 
 
 import cv2
