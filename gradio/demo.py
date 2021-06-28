@@ -35,9 +35,7 @@ cfg = yaml.load(open('configs/mb1_120x120.yml'), Loader=yaml.SafeLoader)
 
 # Init FaceBoxes and TDDFA, recommend using onnx flag
 onnx_flag = True  # or True to use ONNX to speed up
-if onnx_flag:
-    !pip install onnxruntime
-    
+if onnx_flag:    
     import os
     os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
     os.environ['OMP_NUM_THREADS'] = '4'
@@ -50,11 +48,7 @@ else:
     face_boxes = FaceBoxes()
     tddfa = TDDFA(gpu_mode=False, **cfg)
     
-# given an image path or the image url
 
-# img_fp = 'examples/inputs/emma.jpg'
-# img = cv2.imread(img_fp)
-# plt.imshow(img[..., ::-1])
 
 def inference (img):
     # face detection
