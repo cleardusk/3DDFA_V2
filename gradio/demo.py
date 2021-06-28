@@ -68,7 +68,7 @@ def inference (img):
     # regress 3DMM params
     param_lst, roi_box_lst = tddfa(img, boxes)
     # reconstruct vertices and render
-    ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=dense_flag)
+    ver_lst = tddfa.recon_vers(param_lst, roi_box_lst, dense_flag=True)
     return render(img, ver_lst, tddfa.tri, alpha=0.6, show_flag=False);    
 
 
