@@ -7,9 +7,8 @@ def run_cmd(command):
     try:
         print(command)
         call(command, shell=True)
-    except KeyboardInterrupt:
-        print("Process interrupted")
-        sys.exit(1)
+    except OSError:
+        print("ERROR!!!!!!!")
   
 print(os.getcwd())
 os.chdir("/app/FaceBoxes/utils")
