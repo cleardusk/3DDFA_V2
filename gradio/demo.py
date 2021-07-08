@@ -7,9 +7,11 @@ def run_cmd(command):
     try:
         print(command)
         call(command, shell=True)
+    except subprocess.CalledProcessError:
+        print("Errorrrrr!")
     except OSError:
-        print("ERROR!!!!!!!")
-  
+        print("Errorrrrr!")
+        
 print(os.getcwd())
 os.chdir("/app/FaceBoxes/utils")
 print(os.getcwd())
