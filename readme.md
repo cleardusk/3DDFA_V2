@@ -15,7 +15,7 @@ The code repo is owned and maintained by **[Jianzhu Guo](https://guojianzhu.com)
 
 
 **\[Updates\]**
- - `2021.7.10`: [Gradio Web Demo](https://gradio.app/hub/AK391/3DDFA_V2)
+ - `2021.7.10`: Run 3DDFA_V2 online on [Gradio](https://gradio.app/hub/AK391/3DDFA_V2).
  - `2021.1.15`: Borrow the implementation of [Dense-Head-Pose-Estimation](https://github.com/1996scarlet/Dense-Head-Pose-Estimation) for the faster mesh rendering (speedup about 3x, 15ms -> 4ms), see [utils/render_ctypes.py](./utils/render_ctypes.py) for details.
  - `2020.10.7`: Add the latency evaluation of the full pipeline in [latency.py](./latency.py), just run by `python3 latency.py --onnx`, see [Latency](#Latency) evaluation for details.
  - `2020.10.6`: Add onnxruntime support for FaceBoxes to reduce the face detection latency, just append the `--onnx` action to activate it, see [FaceBoxes_ONNX.py](FaceBoxes/FaceBoxes_ONNX.py) for details.
@@ -192,6 +192,7 @@ The default `OMP_NUM_THREADS` is set 4, you can specify it by setting `os.enviro
 
 * The FaceBoxes module is modified from [FaceBoxes.PyTorch](https://github.com/zisianw/FaceBoxes.PyTorch).
 * A list of previous works on 3D dense face alignment or reconstruction: [3DDFA](https://github.com/cleardusk/3DDFA), [face3d](https://github.com/YadiraF/face3d), [PRNet](https://github.com/YadiraF/PRNet).
+* Thank [AK391](https://github.com/AK391) for hosting the Gradio web app.
 
 ## Other implementations or applications
 
