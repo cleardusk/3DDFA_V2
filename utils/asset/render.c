@@ -198,7 +198,7 @@ void _render(const int *triangles,
                 v0.z = 1 - v2.z - v1.z;
 
                 // judge is_point_in_tri by below line of code
-                if (v2.z >= 0 && v1.z >= 0 && v0.z > 0)
+                if (v2.z > 0 && v1.z > 0 && v0.z > 0)
                 {
                     p.z = v0.z * p0.z + v1.z * p1.z + v2.z * p2.z;
                     color_index = p.y * w + p.x;

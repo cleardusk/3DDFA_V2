@@ -261,7 +261,7 @@ void _rasterize(
                 get_point_weight(weight, p, p0, p1, p2);
 
                 // and judge is_point_in_tri by below line of code
-                if (weight[2] >= 0 && weight[1] >= 0 && weight[0] > 0) {
+                if (weight[2] > 0 && weight[1] > 0 && weight[0] > 0) {
                     get_point_weight(weight, p, p0, p1, p2);
                     p_depth = weight[0] * p0_depth + weight[1] * p1_depth + weight[2] * p2_depth;
 
