@@ -2,7 +2,6 @@
 
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 ![GitHub repo size](https://img.shields.io/github/repo-size/cleardusk/3DDFA_V2.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/cleardusk/3ddfa_v2/badge)](https://www.codefactor.io/repository/github/cleardusk/3ddfa_v2)
 [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1OKciI0ETCpWdRjP-VOGpBulDJojYfgWv)
 
 By [Jianzhu Guo](https://guojianzhu.com), [Xiangyu Zhu](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/), [Yang Yang](http://www.cbsr.ia.ac.cn/users/yyang/main.htm), Fan Yang, [Zhen Lei](http://www.cbsr.ia.ac.cn/users/zlei/) and [Stan Z. Li](https://scholar.google.com/citations?user=Y-nyLGIAAAAJ).
