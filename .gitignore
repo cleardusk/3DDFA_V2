@@ -32,3 +32,9 @@ test_pr*.py
 demo_for_*.py
 examples/**/zou*
 examples/inputs/videos
+
+.vs/
+x64/
+
+FaceBoxes/utils/nms/*.pyd
+Sim3DR/*.pyd
