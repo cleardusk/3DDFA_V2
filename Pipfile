@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+torch = "*"
+torchvision = "*"
+matplotlib = "*"
+numpy = "*"
+opencv-python = "*"
+imageio = "*"
+imageio-ffmpeg = "*"
+pyyaml = "*"
+tqdm = "*"
+argparse = "*"
+cython = "*"
+scikit-image = "*"
+scipy = "*"
+onnxruntime = "*"
+gradio = "*"
+
+[dev-packages]
+ipykernel = "*"
+
+[requires]
+python_version = "3.10"

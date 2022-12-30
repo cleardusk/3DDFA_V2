@@ -60,8 +60,12 @@ class TrianglesMeshRender(object):
             bg.shape[0], bg.shape[1]
         )
 
-
-render_app = TrianglesMeshRender(clibs=make_abs_path('asset/render.so'))
+        
+import platform
+if platform.system() == "Windows":
+    render_app = TrianglesMeshRender(clibs=make_abs_path('asset/render.dll'))
+else:
+    render_app = TrianglesMeshRender(clibs=make_abs_path('asset/render.so'))
 
 
 def render(img, ver_lst, tri, alpha=0.6, show_flag=False, wfp=None, with_bg_flag=True):
