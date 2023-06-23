@@ -31,7 +31,7 @@ class BFMModel(object):
             self.tri = bfm.get('tri')
 
         self.tri = _to_ctype(self.tri.T).astype(np.int32)
-        self.keypoints = bfm.get('keypoints').astype(np.long)  # fix bug
+        self.keypoints = bfm.get('keypoints').astype(np.longlong)  # fix bug
         w = np.concatenate((self.w_shp, self.w_exp), axis=1)
         self.w_norm = np.linalg.norm(w, axis=0)
 
