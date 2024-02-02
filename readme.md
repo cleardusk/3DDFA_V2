@@ -80,6 +80,10 @@ python3 demo_video_smooth.py -f examples/inputs/videos/214.avi --onnx
 
 # 4. running on webcam
 python3 demo_webcam_smooth.py --onnx
+
+# 5. running on webcam with box pose
+
+python3 demo_webcam_smooth.py --onnx --opt box_pose
 ```
 
 The implementation of tracking is simply by alignment. If the head pose > 90° or the motion is too fast, the alignment may fail. A threshold is used to trickly check the tracking state, but it is unstable.
@@ -104,6 +108,11 @@ Running on a video will give:
   <img src="docs/images/out.gif" alt="demo" width="512px">
 </p>
 
+Running on a webcam will give:
+
+<p align="center">
+  <img src="examples/inputs/box_pose.jpeg", width="512px">
+</p>
 More results or demos to see: [Hathaway](https://guojianzhu.com/assets/videos/hathaway_3ddfa_v2.mp4).
 
 <!-- Obviously, the eyes parts are not good. -->
