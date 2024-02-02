@@ -13,6 +13,7 @@ from collections import deque
 from FaceBoxes import FaceBoxes
 from TDDFA import TDDFA
 from utils.render import render
+from utils.pose import viz_pose
 # from utils.render_ctypes import render
 from utils.functions import cv_draw_landmark
 
@@ -99,6 +100,8 @@ def main(args):
                 img_draw = cv_draw_landmark(queue_frame[n_pre], ver_ave, size=1)
             elif args.opt == '3d':
                 img_draw = render(queue_frame[n_pre], [ver_ave], tddfa.tri, alpha=0.7)
+            elif args.opt == 'box_pose':
+                img_draw = viz_pose(queue_frame[n_pre], param_lst, [ver_ave], show_flag=False)
             else:
                 raise ValueError(f'Unknown opt {args.opt}')
 
@@ -115,7 +118,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='The smooth demo of webcam of 3DDFA_V2')
     parser.add_argument('-c', '--config', type=str, default='configs/mb1_120x120.yml')
     parser.add_argument('-m', '--mode', default='cpu', type=str, help='gpu or cpu mode')
-    parser.add_argument('-o', '--opt', type=str, default='2d_sparse', choices=['2d_sparse', '2d_dense', '3d'])
+    parser.add_argument('-o', '--opt', type=str, default='2d_sparse', choices=['2d_sparse', '2d_dense', '3d', "box_pose"])
     parser.add_argument('-n_pre', default=1, type=int, help='the pre frames of smoothing')
     parser.add_argument('-n_next', default=1, type=int, help='the next frames of smoothing')
     parser.add_argument('--onnx', action='store_true', default=False)
