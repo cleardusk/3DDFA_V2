@@ -130,12 +130,10 @@ def viz_pose(img, param_lst, ver_lst, show_flag=False, wfp=None):
         img = plot_pose_box(img, P, ver)
         # print(P[:, :3])
         print(f'yaw: {pose[0]:.1f}, pitch: {pose[1]:.1f}, roll: {pose[2]:.1f}')
-
+        # writing yaw, pitch, roll in the upper left of the display
+        img = cv2.putText(img, f"yaw: {pose[0]:.1f}  pitch: {pose[1]:.1f}  roll: {pose[2]:.1f}", (10, 20), 2, .8, (255, 0, 0), 2)
     if wfp is not None:
         cv2.imwrite(wfp, img)
         print(f'Save visualization result to {wfp}')
-
-    if show_flag:
-        plot_image(img)
 
     return img
